@@ -15,8 +15,12 @@
         }
     });
     
-    Answer.associate = (db) => {
-        Answer.belongsTo(db.question);
+    Answer.associate = (models) => {
+        Answer.belongsTo(models.question, {
+            foreignKey: 'questionId',
+            as: 'question',
+            onDelete: 'CASCADE'      
+        });
     }
 
     return Answer;

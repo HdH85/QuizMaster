@@ -15,8 +15,13 @@ module.exports = (sequelize, Sequelize) => {
         }
     });
     
-    Question.associate = (db) => {
-        Question.hasOne(db.answer);
+    Question.associate = (models) => {
+        Question.belongsTo(models.quiz, {
+            foreignKey: 'quizId',
+            as: 'quiz',
+            onDelete: 'CASCADE'       
+        });
+        Question.hasOne(models.answer);
     }
 
     return Question;
