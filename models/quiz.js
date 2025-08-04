@@ -1,4 +1,4 @@
-module.exports = {sequelize, Sequelize} => {
+module.exports = (sequelize, Sequelize) => {
     const Quiz = sequelize.define("quiz", {
         id: {
             type: Sequelize.INTEGER,
@@ -9,10 +9,12 @@ module.exports = {sequelize, Sequelize} => {
             type: Sequelize.STRING,
             allowNull: false
         }
+    }, {
+        timestamps: false,
     });
     Quiz.associate = (models) => {
         Quiz.hasMany(models.question);
-        Quiz.belongsToOne(models.user, {
+        Quiz.belongsTo(models.user, {
             foreignKey: 'userId',
             as: 'user',
             onDelete: 'CASCADE'

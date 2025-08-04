@@ -13,6 +13,8 @@
             type: Sequelize.INTEGER,
             allowNull: false
         }
+    }, {
+        timestamps: false,
     });
     
     Answer.associate = (models) => {
