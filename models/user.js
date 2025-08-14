@@ -20,6 +20,6 @@ module.exports = (sequelize, Sequelize) => {
     User.associate = (models) => {
         User.hasMany(models.quiz);
     }
-    
+
     return User;
 }

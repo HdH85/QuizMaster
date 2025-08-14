@@ -6,12 +6,14 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
+var quizRouter = require('./routes/quiz');
+// var makerLoungeRouter = require('./routes/makerLounge');
 var usersRouter = require('./routes/users');
 var questionsRouter = require('./routes/questions');
 
 var db = require('./models');
 db.sequelize.sync({ force: false }).then(async () => {
-  console.log('Database & tables created!');
+  console.log('Database & tables all good!');
 }).catch(err => {
   console.log('Unable to synchronize the database:', err);
 });
@@ -20,7 +22,7 @@ var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -29,6 +31,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/quiz', quizRouter);
+// app.use('/makerlounge', makerLoungeRouter);
 app.use('/users', usersRouter);
 app.use('/questions', questionsRouter);
 

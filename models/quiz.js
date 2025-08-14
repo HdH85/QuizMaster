@@ -13,7 +13,18 @@ module.exports = (sequelize, Sequelize) => {
         timestamps: false,
     });
     Quiz.associate = (models) => {
-        Quiz.hasMany(models.question);
+        Quiz.hasMany(models.question,
+            {
+                foreignKey: 'quizId',
+                as: 'questions',
+                onDelete: 'CASCADE'
+            });
+        Quiz.hasMany(models.answer,
+            {
+                foreignKey: 'quizId',
+                as: 'answers',
+                onDelete: 'CASCADE'       
+            });
         Quiz.belongsTo(models.user, {
             foreignKey: 'userId',
             as: 'user',

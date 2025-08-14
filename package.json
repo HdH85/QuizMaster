@@ -7,10 +7,13 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "cookieparser": "^0.1.0",
     "debug": "~2.6.9",
+    "ejs": "^3.1.10",
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
     "jade": "^1.9.2",
+    "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "mysql2": "^3.14.3",
     "sequelize": "^6.37.7"

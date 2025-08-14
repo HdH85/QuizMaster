@@ -5,7 +5,11 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
+    try {
+        res.render('quiz', {title: 'Quizmaker'});
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 module.exports = router;

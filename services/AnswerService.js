@@ -1,4 +1,7 @@
-﻿class AnswerService {
+﻿const { sequelize } = require('../models');
+const { QueryTypes } = require('sequelize');
+
+class AnswerService {
     constructor(db) {
         this.client = db.sequelize;
         this.Answer = db.answer;

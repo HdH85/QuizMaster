@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>QuizMaker</title>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <p></p>
+    <h2>QuizMaker</h2>
+    <p></p>
+    <div id="name">
+        <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">
+    </div>
+    <p></p>
+    <div id="question-maker">
+        <input type="text" name="question" placeholder="Question">
+        <input type="text" name="answer" placeholder="Answer">
+        <input type="number" name="time" placeholder="Time (min.)">
+        <p></p>
+    </div>
+    <p>
+        <button id="add">+</button>
+    </p>
+    <p>
+        <button id="submit">Submit</button>
+    </p>
+    <p></p>
+    <a href="">
+        <button id="createQuiz">Create</button>
+    </a>
+    <script src="/javascripts/questionEditor.js"></script>
+    <%- include('partials/footer.ejs') %>
+</body>
+</html>

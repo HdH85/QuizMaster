@@ -1,3 +1,6 @@
+const { sequelize } = require('../models');
+const { QueryTypes } = require('sequelize');
+
 class QuestionService {
     constructor(db) {
         this.client = db.sequelize;

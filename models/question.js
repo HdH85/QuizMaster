@@ -23,7 +23,10 @@ module.exports = (sequelize, Sequelize) => {
             as: 'quiz',
             onDelete: 'CASCADE'       
         });
-        Question.hasOne(models.answer);
+        Question.hasOne(models.answer, {
+                foreignKey: 'questionId',
+                as: 'answer',
+            });
     }
 
     return Question;
