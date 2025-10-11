@@ -19,12 +19,6 @@ module.exports = (sequelize, Sequelize) => {
                 as: 'questions',
                 onDelete: 'CASCADE'
             });
-        Quiz.hasMany(models.answer,
-            {
-                foreignKey: 'quizId',
-                as: 'answers',
-                onDelete: 'CASCADE'       
-            });
         Quiz.belongsTo(models.user, {
             foreignKey: 'userId',
             as: 'user',

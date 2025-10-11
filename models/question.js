@@ -9,6 +9,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false
         },
+        answer: {
+            type: Sequelize.STRING,
+            allowNull: false       
+        },
         time: {
             type: Sequelize.INTEGER,
             allowNull: false
@@ -23,10 +27,6 @@ module.exports = (sequelize, Sequelize) => {
             as: 'quiz',
             onDelete: 'CASCADE'       
         });
-        Question.hasOne(models.answer, {
-                foreignKey: 'questionId',
-                as: 'answer',
-            });
     }
 
     return Question;

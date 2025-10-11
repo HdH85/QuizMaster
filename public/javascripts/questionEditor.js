@@ -1,14 +1,14 @@
+import { getApi } from './api.js';
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("add").addEventListener("click", () => {
-        const questionList = document.getElementById("question-maker");
-        const newQuestion = document.createElement("div");
-        newQuestion.className= "question";
-        newQuestion.innerHTML = `
-        <input type="text" name="question" placeholder="Question">
-        <input type="text" name="answer" placeholder="Answer">
-        <input type="number" name="time" placeholder="Time (min.)">
-        <p></p>`
+    document.getElementById("newQuestion").addEventListener("click", () => {
+        const questionModal = document.querySelector("dialog");
+        questionModal.showModal();
         
+        const newQuestion = document.createElement("tr");
+        newQuestion.innerHTML = document.getElementById("add-question").innerHTML;
         questionList.appendChild(newQuestion);
     })
     

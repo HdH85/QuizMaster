@@ -4,8 +4,9 @@ var jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
+/* GET home page. */
 router.get('/', function(req, res, next) {
-    res.send('respond with a resource');
+    res.render('myquizes', {title: 'myQuizes'});
 });
 
 module.exports = router;

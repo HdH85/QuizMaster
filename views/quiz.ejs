@@ -8,30 +8,37 @@
 </head>
 <body>
     <%- include('partials/navbar') %>
+    <%- include('partials/modal') %>
     <p></p>
     <h2>QuizMaker</h2>
     <p></p>
     <div id="name">
         <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">
     </div>
-    <p></p>
-    <div id="question-maker">
-        <input type="text" name="question" placeholder="Question">
-        <input type="text" name="answer" placeholder="Answer">
-        <input type="number" name="time" placeholder="Time (min.)">
-        <p></p>
+    <p>
+        <button id="newQuestion">Add question</button>
+    </p>
+    <p>
+    <div id="tableContainer">
+        <table id="questionTable">
+            <thead>
+            <tr>
+                <th>Question</th>
+                <th>Answer</th>
+                <th>Time</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-    <p>
-        <button id="add">+</button>
-    </p>
-    <p>
-        <button id="submit">Submit</button>
     </p>
     <p></p>
-    <a href="">
-        <button id="createQuiz">Create</button>
+    <a>
+        <button id="createQuiz">Create quiz</button>
     </a>
-    <script src="/javascripts/questionEditor.js"></script>
+    <script type="module" src="/javascripts/quizMaker.js"></script>
     <%- include('partials/footer.ejs') %>
 </body>
 </html>

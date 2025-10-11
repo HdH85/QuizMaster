@@ -6,13 +6,15 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
     "cookie-parser": "~1.4.4",
     "cookieparser": "^0.1.0",
     "debug": "~2.6.9",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "http-errors": "~1.6.3",
-    "jade": "^1.9.2",
+    "jade": "^0.29.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
     "mysql2": "^3.14.3",

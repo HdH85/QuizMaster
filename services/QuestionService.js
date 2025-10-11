@@ -1,32 +1,29 @@
-const { sequelize } = require('../models');
-const { QueryTypes } = require('sequelize');
+const db = require('../models');
 
 class QuestionService {
-    constructor(db) {
+    constructor() {
         this.client = db.sequelize;
-        this.Question = db.question;
-        this.Answer = db.answer;
+        this.question = db.question;
     }
 
-    async createQuestion(questionData, answerData) {
+    async createQuestion(data) {
         try {
-            const question = await this.Question.create(questionData);
-            const answer = await this.Answer.create({answerData});
-            return question && answer;
+            const question = await this.question.create(data)
+            return question;
         } catch (error) {
             throw new Error('Error creating question: ' + error.message);
         }
     }
     
-    async asyncEditQuestion(id, questionData) {
+    async asyncEditQuestion(id, data) {
         try {
-            const question = await this.Question.findByPk(id);
+            const question = await this.question.findByPk(id);
             if (!question) {
                 return new Error('Question not found');
             }
-            const updatedQuestion = await question.update({
-                question: questionData.question,
-                time: questionData.time
+            const updatedQuestion = await this.question.update({
+                question: data.question,
+                time: data.time
             });
         } catch (error) {
             throw new Error('Error updating question: ' + error.message);       
@@ -34,7 +31,7 @@ class QuestionService {
     }
     async getAllQuestions() {
         try {
-            const questions = await this.Question.findAll();
+            const questions = await this.question.findAll();
             return questions;
         } catch (error) {
             throw new Error('Error fetching questions: ' + error.message);
@@ -43,7 +40,7 @@ class QuestionService {
 
     async getQuestionById(id) {
         try {
-            const question = await this.Question.findByPk(id);
+            const question = await this.question.findByPk(id);
             if (!question) {
                 return new Error('Question not found');
             }
@@ -53,17 +50,14 @@ class QuestionService {
         }
     }
 
-    async updateQuestion(id, questionData) {
+    async updateQuestion(id, data) {
         try {
-            const question = await this.Question.findByPk(id);
+            const question = await this.question.findByPk(id);
             if (!question) {
                 return new Error('Question not found');
             }
-            const updatedQuestion = await question.update({
-                question: questionData.question,
-                time: questionData.time
-            });
-            return updatedQuestion;
+            await question.update(data);
+            return question;
         } catch (error) {
             throw new Error('Error updating question: ' + error.message);
         }
@@ -71,7 +65,7 @@ class QuestionService {
 
     async deleteQuestion(id) {
         try {
-            const question = await this.Question.findByPk(id);
+            const question = await this.question.findByPk(id);
             if (!question) {
                 return new Error('Question not found');
             }

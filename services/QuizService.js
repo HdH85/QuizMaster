@@ -1,16 +1,14 @@
-const { sequelize } = require('../models');
-const { QueryTypes } = require('sequelize');
+const db = require('../models');
+
 class QuizService {
-    constructor(db) {
+    constructor() {
         this.client = db.sequelize;
-        this.Quiz = db.quiz;
-        this.Question = db.question;
-        this.Answer = db.answer;
+        this.quiz = db.quiz;
     }
     
     async getAllQuizzes() {
         try {
-            const quizzes = await this.Quiz.findAll();
+            const quizzes = await this.quiz.findAll();
             return quizzes;
         } catch (error) {
             throw new Error('Error fetching quizzes: ' + error.message);
@@ -19,21 +17,25 @@ class QuizService {
     
     async getQuizById(id) {
         try {
-            const quiz = await this.Quiz.findByPk(id);
+            const quiz = await this.quiz.findByPk(id);
             if (!quiz) {
                 return new Error('Quiz not found');
             }
             return quiz;
+        } catch (error) {
+            throw new Error('Error fetching quiz: ' + error.message);
         }
     }
     
-    async createQuiz(quizData) {
+    async createQuiz(data) {
         try {
-            const quiz = await this.Quiz.create({
-                title: quizData.title,
-                description: quizData.description,
-                time: quizData.time
+            const quiz = await this.quiz.create({
+                title: data.title,
+                description: data.description,
+                time: data.time
             });
+        } catch (error) {
+            throw new Error('Error creating quiz: ' + error.message);
         }
     }
 }
