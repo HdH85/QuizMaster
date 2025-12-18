@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('myquizes', {title: 'myQuizes'});
+router.get('/', async(req, res, next) => {
+    res.render('myquizzes', {title: 'myQuizzes'});
 });
 
 module.exports = router;

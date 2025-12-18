@@ -12,32 +12,21 @@
     <p></p>
     <h2>QuizMaker</h2>
     <p></p>
-    <div id="name">
-        <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">
+    <div id="quizNameContainer">
+        <% if (typeof quiz !== 'undefined' && quiz) {%>
+            <h3><%= quiz.name %></h3>
+        <%} else {%>
+            <div id="name">
+                <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">
+            </div>
+            <p>
+                <button id="newQuiz">Make Quiz</button>
+            </p>
+            <div id="questionContainer">
+            </div>
+        <%}%>
     </div>
-    <p>
-        <button id="newQuestion">Add question</button>
-    </p>
-    <p>
-    <div id="tableContainer">
-        <table id="questionTable">
-            <thead>
-            <tr>
-                <th>Question</th>
-                <th>Answer</th>
-                <th>Time</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
-    </div>
-    </p>
-    <p></p>
-    <a>
-        <button id="createQuiz">Create quiz</button>
-    </a>
+   
     <script type="module" src="/javascripts/quizMaker.js"></script>
     <%- include('partials/footer.ejs') %>
 </body>

@@ -1,5 +1,6 @@
 const Quiz = require('./sessionManager.js');
 const question = require("./quizManager");
+import { getQuestionData, getAnswerData } from './quizData.js';
 
 class QuizManager {
     constructor(quizId) {

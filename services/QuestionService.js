@@ -15,7 +15,7 @@ class QuestionService {
         }
     }
     
-    async asyncEditQuestion(id, data) {
+    async EditQuestion(id, data) {
         try {
             const question = await this.question.findByPk(id);
             if (!question) {

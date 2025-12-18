@@ -2,7 +2,7 @@
 
 
 async function getQuizData(quizId) {
-    return getApi('/quiz/' + quizId, 'GET', null, true)
+    return getApi(`/quiz/${quizId}`, 'GET', null, true)
         .then(res => {
             if (res.success) {
                 return res.data.result;
@@ -13,7 +13,7 @@ async function getQuizData(quizId) {
 }
 
 async function getQuestionData(questionId) {
-    return getApi('/questions/' + questionId, 'GET', null, true)
+    return getApi(`/questions/${questionId}`, 'GET', null, true)
         .then(res => {
             if (res.success) {
                 return res.data.result.questions;
@@ -24,7 +24,7 @@ async function getQuestionData(questionId) {
 }
 
 async function getAnswerData(answerId) {
-    return getApi('/answers/' + answerId, 'GET', null, true)
+    return getApi(`/answers/${answerId}`, 'GET', null, true)
         .then(res => {
             if (res.success) {
                 return res.data.result.answers;
@@ -35,7 +35,7 @@ async function getAnswerData(answerId) {
 }
 
 async function quizAllQuestions(quizId) {
-    return getApi('/quiz/' + quizId + '/questions', 'GET', null, true)
+    return getApi(`/quiz/${quizId}/questions`, 'GET', null, true)
         .then(res => {
             if (res.success) {
                 return res.data.result.questions;

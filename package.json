@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.0",
+    "body-parser": "^2.2.1",
     "cookie-parser": "~1.4.4",
     "cookieparser": "^0.1.0",
     "debug": "~2.6.9",
@@ -21,6 +21,7 @@
     "sequelize": "^6.37.7"
   },
   "devDependencies": {
-    "dotenv": "^17.2.1"
+    "dotenv": "^17.2.1",
+    "http-proxy-middleware": "^3.0.5"
   }
 }

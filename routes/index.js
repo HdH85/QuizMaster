@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', async(req, res, next) => {
   res.render('index', { title: 'Quizmaster' });
 });
 

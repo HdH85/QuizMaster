@@ -5,36 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9aa87325-4967-4ed3-be3b-71e63856f971" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/javascripts/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/javascripts/quizData.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/javascripts/quizManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/javascripts/sessionManager.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/javascripts/timer.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/routes/myQuizes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/myquizes.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/partials/modal.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views/user.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/answer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/question.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/question.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/models/quiz.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/countdown.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/javascripts/questionEditor.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/questionEditor.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/questionEditor.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/public/javascripts/quizMaker.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/quizMaker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/questions.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/javascripts/quizManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/javascripts/quizManager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/myQuizes.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/myQuizzes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/quiz.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/quiz.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/AnswerService.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/services/QuestionService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/QuestionService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/QuizService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/QuizService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/UserService.js" beforeDir="false" afterPath="$PROJECT_DIR$/services/UserService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/myquizes.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/myquizzes.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/partials/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/modal.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/partials/navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/partials/navbar.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/quiz.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/quiz.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/user.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/user.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,29 +74,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "javascript.nodejs.core.library.configured.version": "22.20.0",
-    "javascript.nodejs.core.library.typings.version": "22.18.7",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.standard": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.standard": "",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "C:/Users/Håkon/AppData/Roaming/JetBrains/Rider2025.2/node/versions/22.20.0/node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\JetBrains Rider 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;javascript.nodejs.core.library.configured.version&quot;: &quot;22.20.0&quot;,
+    &quot;javascript.nodejs.core.library.typings.version&quot;: &quot;22.18.7&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.standard&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.standard&quot;: &quot;&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;C:/Users/Håkon/AppData/Roaming/JetBrains/Rider2025.2/node/versions/22.20.0/node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.mcp&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Program Files\\JetBrains\\JetBrains Rider 2025.2.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="StructureViewState">
     <option name="selectedTab" value="HTML" />
   </component>
@@ -136,7 +126,10 @@
       <workItem from="1759084045427" duration="3545000" />
       <workItem from="1759227091948" duration="5048000" />
       <workItem from="1760004314493" duration="124000" />
-      <workItem from="1760004576624" duration="34084000" />
+      <workItem from="1760004576624" duration="39783000" />
+      <workItem from="1761581567821" duration="13471000" />
+      <workItem from="1761645235818" duration="3817000" />
+      <workItem from="1761662282705" duration="4612000" />
     </task>
     <task id="LOCAL−00001" summary="Initial commit">
       <option name="closed" value="true" />
@@ -173,7 +166,14 @@
       <option name="presentableId" value="LOCAL−00005" />
       <updated>1755174209564</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL−00006" summary="DB structure revision. Several alerations and additions at frontend level.">
+      <option name="closed" value="true" />
+      <created>1760173459319</created>
+      <option name="number" value="LOCAL−00006" />
+      <option name="presentableId" value="LOCAL−00006" />
+      <updated>1760173459319</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -211,7 +211,8 @@
     <MESSAGE value="DB model expansion and refinement." />
     <MESSAGE value="Amendements of db models &amp; app.js" />
     <MESSAGE value="Progression on db model, service files and front-end related files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Progression on db model, service files and front-end related files." />
+    <MESSAGE value="DB structure revision. Several alerations and additions at frontend level." />
+    <option name="LAST_COMMIT_MESSAGE" value="DB structure revision. Several alerations and additions at frontend level." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

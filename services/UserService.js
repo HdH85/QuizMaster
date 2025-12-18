@@ -73,6 +73,15 @@ class UserService {
             throw new Error('Error fetching user: ' + error.message);       
         }
     }
+    
+    async logout(req, res) {
+        try {
+            res.clearCookie('token');
+            return { message: 'Logged out successfully' };
+        } catch (error) {
+            throw new Error('Error logging out: ' + error.message);       
+        }
+    }
 }
 
 module.exports = UserService;

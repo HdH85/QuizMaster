@@ -1,7 +1,7 @@
 function getApi(url, method = 'GET', body = null) {
     const headers = {'Content-Type': 'application/json'};
 
-    return fetch('/api' + url, {
+    return fetch(`/api/${url}`, {
         method,
         headers,
         body: body ? JSON.stringify(body) : null

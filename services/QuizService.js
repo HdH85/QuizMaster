@@ -30,12 +30,26 @@ class QuizService {
     async createQuiz(data) {
         try {
             const quiz = await this.quiz.create({
-                title: data.title,
-                description: data.description,
-                time: data.time
+                name: data.name
             });
+            return quiz;
         } catch (error) {
             throw new Error('Error creating quiz: ' + error.message);
+        }
+    }
+    
+    async editQuizName(id, data) {
+        try {
+            const quiz = await this.quiz.findByPk(id);
+            if(!quiz) {
+                return new Error('Quiz not found');
+            }
+            
+            const updatedQuizName = await this.quiz.update({
+                name: data.name
+            });
+        } catch (error) {
+            throw new Error('Error updating quiz name: ' + error.message);
         }
     }
 }

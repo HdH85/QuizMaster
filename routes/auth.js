@@ -48,9 +48,9 @@ router.post('/register', jsonParser, async(req, res, next)=> {
         }
       })
     }
-    return res.status(200).json({
+    return res.status(201).json({
       success: true,
-      statuscode: 200,
+      statuscode: 201,
       data: {
         message: `User account created successfully! Welcome ${user.username}!`
       }
@@ -65,7 +65,7 @@ router.post('/register', jsonParser, async(req, res, next)=> {
       }
     })
   }
-})
+});
 
 router.post('/login', jsonParser, async(req, res, next)=> {
   try {
@@ -90,9 +90,9 @@ router.post('/login', jsonParser, async(req, res, next)=> {
         }, process.env.TOKEN_SECRET, {
           expiresIn: '1h'
         });
-        return res.status(200).json({
+        return res.status(201).json({
           success: true,
-          statuscode: 200,
+          statuscode: 201,
           data: {
             message: `Welcome ${user.username}!`,
             token: token
@@ -110,6 +110,29 @@ router.post('/login', jsonParser, async(req, res, next)=> {
       }
     });
   }
-})
+});
+
+router.post('/logout', isAuth, async(req, res, next)=> {
+    try {
+        await userService.logout(req, res);
+        res.redirect('/');
+        return res.status(200).json({
+            success: true,
+            statuscode: 200,
+            data: {
+                message: 'Logged out successfully'
+            }
+        });
+    } catch (error) {
+        console.error('Error logging out: ', error);
+        return res.status(500).json({
+            success: false,
+            statuscode: 500,
+            data: {
+                message: error.message
+            }
+        })
+    }
+});
 
 module.exports = router;

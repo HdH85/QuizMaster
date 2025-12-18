@@ -4,11 +4,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var quizRouter = require('./routes/quiz');
-var myQuizesRouter = require('./routes/myQuizes');
+var myQuizzesRouter = require('./routes/myQuizzes');
 
 var db = require('./models');
 db.sequelize.sync({ force: false }).then(async () => {
@@ -24,15 +26,23 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
+app.use('/api', createProxyMiddleware({
+    target: 'http://localhost:3000',
+    changeOrigin: true,
+    pathRewrite: {
+        '^/api': ''
+    }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
-app.use('/myquizes', myQuizesRouter);
+app.use('/myquizzes', myQuizzesRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
