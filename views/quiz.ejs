@@ -15,6 +15,41 @@
     <div id="quizNameContainer">
         <% if (typeof quiz !== 'undefined' && quiz) {%>
             <h3><%= quiz.name %></h3>
+            <% if (quiz.questions && quiz.questions.length > 0) { %>
+                <div id="questionContainer">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Question</th>
+                                <th>Answer</th>
+                                <th>Time (minutes)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% quiz.questions.forEach(function(question, index) { %>
+                                <tr>
+                                    <td><%= question.question %></td>
+                                    <td><%= question.answer %></td>
+                                    <td><%= question.time %></td>
+                                    <td>
+                                        <button class="editQuestionBtn" data-index="<%= index %>">Edit</button>
+                                        <button class="deleteQuestionBtn" data-index="<%= index %>">Delete</button>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                    <p>
+                        <a href="/quiz"><button>Create New Quiz</button></a>
+                    </p>
+                    <p>
+                        <a href="/playQuiz/<%= quiz.id %>"><button>Play</button></a>
+                    </p>
+                </div>
+                <% } else { %>
+                <p>No questions found for this quiz.</p>
+            <% } %>
+
         <%} else {%>
             <div id="name">
                 <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">

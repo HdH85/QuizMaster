@@ -4,6 +4,7 @@ class QuizService {
     constructor() {
         this.client = db.sequelize;
         this.quiz = db.quiz;
+        this.question = db.question;
     }
     
     async getAllQuizzes() {
@@ -17,7 +18,12 @@ class QuizService {
     
     async getQuizById(id) {
         try {
-            const quiz = await this.quiz.findByPk(id);
+            const quiz = await this.quiz.findByPk(id, {
+                include: [{ 
+                    model: this.question, 
+                    as: 'questions' 
+                }]
+            });
             if (!quiz) {
                 return new Error('Quiz not found');
             }
@@ -29,10 +35,23 @@ class QuizService {
     
     async createQuiz(data) {
         try {
-            const quiz = await this.quiz.create({
-                name: data.name
+            const result = await this.client.transaction(async (t) => {
+                const newQuiz = await this.quiz.create({
+                    name: data.name
+                }, { transaction: t });
+
+                if (data.questions && Array.isArray(data.questions)) {
+                    const questionsData = data.questions.map(q => ({
+                        question: q.question,
+                        answer: q.answer,
+                        time: q.time,
+                        quizId: newQuiz.id
+                    }));
+                    await this.question.bulkCreate(questionsData, { transaction: t });
+                }
+                return newQuiz;
             });
-            return quiz;
+            return result;
         } catch (error) {
             throw new Error('Error creating quiz: ' + error.message);
         }
