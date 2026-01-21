@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "dotenv": "^17.2.1",
+    "eslint": "^9.39.2",
     "http-proxy-middleware": "^3.0.5"
   }
 }

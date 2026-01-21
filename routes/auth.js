@@ -10,11 +10,11 @@ const { isAuth, isAdmin } = require('../middleware/authMiddleware');
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-router.get('/', async(req, res, next)=> {
+router.get('/', async (req, res, next) => {
   res.render('user', { title: 'Sign in' });
 });
 
-router.post('/register', jsonParser, async(req, res, next)=> {
+router.post('/register', jsonParser, async (req, res, next)=> {
   try {
     const {username, password} = req.body;
     if (!username || !password) {
@@ -67,7 +67,7 @@ router.post('/register', jsonParser, async(req, res, next)=> {
   }
 });
 
-router.post('/login', jsonParser, async(req, res, next)=> {
+router.post('/login', jsonParser, async (req, res, next) => {
   try {
     const {username, password} = req.body;
     const user = await userService.login(username, password);
@@ -112,7 +112,7 @@ router.post('/login', jsonParser, async(req, res, next)=> {
   }
 });
 
-router.post('/logout', isAuth, async(req, res, next)=> {
+router.post('/logout', isAuth, async (req, res, next) => {
     try {
         await userService.logout(req, res);
         res.redirect('/');

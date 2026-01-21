@@ -71,6 +71,28 @@ class QuizService {
             throw new Error('Error updating quiz name: ' + error.message);
         }
     }
+
+    async deleteQuiz(id) {
+        try {
+            const quiz = await this.quiz.findByPk(id);
+            if(!quiz) {
+                return new Error('Quiz not found');
+            }
+            await db.sequelize.transaction(async (t) => {
+                await this.question.destroy({
+                    where: { quizId: id }
+                }, { transaction: t });
+                await this.quiz.destroy({
+                    where: { id: id }
+                }, { transaction: t });
+            });
+
+            return ({ message: 'Quiz deleted successfully' });
+            
+        } catch (error) {
+            throw new Error('Error deleting quiz: ' + error.message);
+        }
+    }
 }
 
 module.exports = QuizService;

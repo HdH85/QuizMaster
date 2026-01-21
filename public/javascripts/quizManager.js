@@ -42,7 +42,7 @@ class QuizManager {
         }
     }
     
-    questionTimerTick(formattedTime, remaining) {
+    async questionTimerTick(formattedTime, remaining) {
         const timer = document.getElementById('timer');
         timer.innerHTML = formattedTime;
         if (timer <= 30000) {
