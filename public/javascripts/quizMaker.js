@@ -12,113 +12,93 @@ function addQuiz(quizData) {
   });
 }
 
-function getQuiz(id) {
-  return getApi(`quiz/${id}`, "GET", id).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function getQuiz(id) {
+//   return getApi(`quiz/${id}`, "GET", id).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function deleteQuiz(id) {
-  return getApi(`quiz/${id}`, "DELETE", null, true).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function deleteQuiz(id) {
+//   return getApi(`quiz/${id}`, "DELETE", null, true).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function addQuestion(questionData) {
-  return getApi("quiz/question", "POST", questionData).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function addQuestion(questionData) {
+//   return getApi("quiz/question", "POST", questionData).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function getQuestion(id) {
-  return getApi(`quiz/question/${id}`, "GET", id).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function getQuestion(id) {
+//   return getApi(`quiz/question/${id}`, "GET", id).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function updateQuestion(id) {
-  return getApi(`quiz/question/${id}`, "PUT", id).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function updateQuestion(id) {
+//   return getApi(`quiz/question/${id}`, "PUT", id).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function deleteQuestion(id) {
-  return getApi(`quiz/question/${id}`, "DELETE", null, true).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
+// function deleteQuestion(id) {
+//   return getApi(`quiz/question/${id}`, "DELETE", null, true).then((res) => {
+//     if (res.success) {
+//       return res.data.result;
+//     } else {
+//       throw new Error(res.data.message);
+//     }
+//   });
+// }
 
-function renderQuestionList(questions) {
-  window.questionList = questions;
-  const questionList = document.querySelector("#questionTable tbody");
-  if (!questionList) {
-    console.error("Question list not found");
-    return;
-  }
-  questionList.innerHTML = "";
+// function renderQuestionList(questions) {
+//   window.questionList = questions;
+//   const questionList = document.querySelector("#questionTable tbody");
+//   if (!questionList) {
+//     console.error("Question list not found");
+//     return;
+//   }
+//   questionList.innerHTML = "";
 
-  questions.forEach((question) => {
-    const row = document.createElement("tr");
-    const questionId = question._id || question.id;
-    row.innerHTML = `
-            <td>${question.question}</td>
-            <td>${question.answer}</td>
-            <td>${question.time}</td>
-            <td><button class="edit-question" data-id="${questionId}" data-question="${question.question}" data-answer="${question.answer}" data-time="${question.time}">Edit</button></td>
-            <td><button class="delete-question" data-id="${questionId}">Delet   e</button></td>
-        `;
-    questionList.appendChild(row);
-  });
-}
+//   questions.forEach((question) => {
+//     const row = document.createElement("tr");
+//     const questionId = question._id || question.id;
+//     row.innerHTML = `
+//             <td>${question.question}</td>
+//             <td>${question.answer}</td>
+//             <td>${question.time}</td>
+//             <td><button class="edit-question" data-id="${questionId}" data-question="${question.question}" data-answer="${question.answer}" data-time="${question.time}">Edit</button></td>
+//             <td><button class="delete-question" data-id="${questionId}">Delete</button></td>
+//         `;
+//     questionList.appendChild(row);
+//   });
+// }
 
 function clearQuestionForm() {
   document.getElementById("question").value = "";
   document.getElementById("answer").value = "";
   document.getElementById("time").value = "";
-}
-
-function newQuestion() {
-  document.getElementById("question").value = "";
-  document.getElementById("answer").value = "";
-  document.getElementById("time").value = "";
-}
-
-function editQuestion(question) {
-  document.querySelector(".edit-question").forEach((button) => {
-    button.addEventListener("click", () => {
-      const question = this.getAttribute("data-question");
-      const answer = this.getAttribute("data-answer");
-      const time = this.getAttribute("data-time");
-
-      document.getElementById("question").value = question;
-      document.getElementById("answer").value = answer;
-      document.getElementById("time").value = time;
-    });
-  });
 }
 
 function saveNewQuestion() {
@@ -147,7 +127,7 @@ function saveNewQuestion() {
         <td>${question}</td>
         <td>${answer}</td>
         <td>${time}</td>
-        <td><button class="edit-question" data-index="${localIndex}" data-question="${question}" data-answer="${answer}" data-time="${time}">Edit</button></td>
+        <td><button class="edit-question" data-index="${localIndex}" data-question="${question}" data-answer="${answer}" data-time="${time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
         <td><button class="delete-question" data-index="${localIndex}">Delete</button></td>
     `;
   tbody.appendChild(row);
@@ -172,7 +152,7 @@ document.addEventListener("DOMContentLoaded", () => {
         quizNameContainer.innerHTML = `<h3 id="theQuizName">${quizName}</h3>`;
         questionContainer.innerHTML = `
                             <p>
-                                <button id="newQuestion">Add question</button>
+                                <button id="newQuestion" data-bs-toggle="modal" data-bs-target="#questionModal">Add question</button>
                             </p>
                             <p>
                             <div id="tableContainer">
@@ -202,32 +182,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  function getQuestionModal(mode, questionIndex = null) {
+    const questionModal = document.getElementById("questionModal");
+    if (mode === 'new') {
+      clearQuestionForm();
+    } else if (mode === 'edit') {
+      const questionData = inBrowserQuestions[questionIndex];
+      document.getElementById("question").value = questionData.question;
+      document.getElementById("answer").value = questionData.answer;
+      document.getElementById("time").value = questionData.time;
+    }
+    questionModal.showModal();
+  }
+
   function eventListeners() {
     const newQuestionBtn = document.getElementById("newQuestion");
     const saveQuestionBtn = document.getElementById("saveNewQuestion");
     const saveQuizBtn = document.getElementById("saveQuiz");
-    const questionModal = document.querySelector("dialog");
     const questionTable = document.getElementById("questionTable");
 
     if (newQuestionBtn) {
       newQuestionBtn.addEventListener("click", () => {
         if (questionModal) {
-          questionModal.showModal();
+          getQuestionModal('new');
         } else {
           console.error("Question modal not found");
         }
       });
     }
 
-    if (saveQuestionBtn) {
-      saveQuestionBtn.addEventListener("click", () => {
-        if (!questionModal) {
-          console.error("Question modal not found");
-          return;
-        }
-        saveNewQuestion();
-      });
-    }
+    // if (saveQuestionBtn) {
+    //   saveQuestionBtn.addEventListener("click", () => {
+    //     if (!questionModal) {
+    //       console.error("Question modal not found");
+    //       return;
+    //     }
+    //     saveNewQuestion();
+    //   });
+    // }
 
     if (questionTable) {
       questionTable.addEventListener("click", (event) => {
@@ -239,24 +231,54 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById("question").value = question;
           document.getElementById("answer").value = answer;
           document.getElementById("time").value = time;
-        } else if (event.target.classList.contains("delete-question")) {
-          const index = parseInt(event.target.getAttribute("data-index"));
-          inBrowserQuestions.splice(index, 1);
-          console.log("Question deleted locally at index:", index);
-          event.target.closest("tr").remove();
+          getQuestionModal('edit', parseInt(event.target.getAttribute("data-index")));
+          if (saveQuestionBtn) {
+            saveQuestionBtn.onclick = () => {
+              const updatedQuestion = document.getElementById("question").value;
+              const updatedAnswer = document.getElementById("answer").value;
+              const updatedTime = document.getElementById("time").value;
+              const index = parseInt(event.target.getAttribute("data-index"));
 
-          const rows = questionTable.querySelectorAll("tbody tr");
-          rows.forEach((row, i) => {
-            const editBtn = row.querySelector(".edit-question");
-            const deleteBtn = row.querySelector(".delete-question");
-            if (editBtn) {
-              editBtn.setAttribute("data-index", i);
+              if (!updatedQuestion || !updatedAnswer || !updatedTime) {
+                alert("Please fill in all fields");
+                return;
+              }
+              inBrowserQuestions[index] = {
+                question: updatedQuestion,
+                answer: updatedAnswer,
+                time: updatedTime,
+              };
+              console.log("Question updated locally at index:", index);
+              const row = event.target.closest("tr");
+              row.innerHTML = `
+                    <td>${updatedQuestion}</td>
+                    <td>${updatedAnswer}</td>
+                    <td>${updatedTime}</td>
+                    <td><button class="edit-question" data-index="${index}" data-question="${updatedQuestion}" data-answer="${updatedAnswer}" data-time="${updatedTime}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
+                    <td><button class="delete-question" data-index="${index}">Delete</button></td>
+                `;
+              document.querySelector("dialog").close();
+              clearQuestionForm();
             }
-            if (deleteBtn) {
-              deleteBtn.setAttribute("data-index", i);
-            }
-          });
-        }
+          }
+        } else if (event.target.classList.contains("delete-question")) {
+            const index = parseInt(event.target.getAttribute("data-index"));
+            inBrowserQuestions.splice(index, 1);
+            console.log("Question deleted locally at index:", index);
+            event.target.closest("tr").remove();
+
+            const rows = questionTable.querySelectorAll("tbody tr");
+            rows.forEach((row, i) => {
+              const editBtn = row.querySelector(".edit-question");
+              const deleteBtn = row.querySelector(".delete-question");
+              if (editBtn) {
+                editBtn.setAttribute("data-index", i);
+              }
+              if (deleteBtn) {
+                deleteBtn.setAttribute("data-index", i);
+              }
+            });
+          }
       });
     }
 

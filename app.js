@@ -12,6 +12,7 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var quizRouter = require('./routes/quiz');
 var myQuizzesRouter = require('./routes/myQuizzes');
+var playQuizRouter = require('./routes/playQuiz');
 
 var db = require('./models');
 db.sequelize.sync({ force: false }).then(async () => {
@@ -51,6 +52,7 @@ app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/myquizzes', myQuizzesRouter);
+app.use('/playQuiz', playQuizRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
