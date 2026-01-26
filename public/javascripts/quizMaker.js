@@ -1,99 +1,6 @@
-import { getApi } from "./api.js";
+import { addQuiz } from "./quizData.js";
 
 let inBrowserQuestions = [];
-
-function addQuiz(quizData) {
-  return getApi("quiz", "POST", quizData).then((res) => {
-    if (res.success) {
-      return res.data.result;
-    } else {
-      throw new Error(res.data.message);
-    }
-  });
-}
-
-// function getQuiz(id) {
-//   return getApi(`quiz/${id}`, "GET", id).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function deleteQuiz(id) {
-//   return getApi(`quiz/${id}`, "DELETE", null, true).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function addQuestion(questionData) {
-//   return getApi("quiz/question", "POST", questionData).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function getQuestion(id) {
-//   return getApi(`quiz/question/${id}`, "GET", id).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function updateQuestion(id) {
-//   return getApi(`quiz/question/${id}`, "PUT", id).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function deleteQuestion(id) {
-//   return getApi(`quiz/question/${id}`, "DELETE", null, true).then((res) => {
-//     if (res.success) {
-//       return res.data.result;
-//     } else {
-//       throw new Error(res.data.message);
-//     }
-//   });
-// }
-
-// function renderQuestionList(questions) {
-//   window.questionList = questions;
-//   const questionList = document.querySelector("#questionTable tbody");
-//   if (!questionList) {
-//     console.error("Question list not found");
-//     return;
-//   }
-//   questionList.innerHTML = "";
-
-//   questions.forEach((question) => {
-//     const row = document.createElement("tr");
-//     const questionId = question._id || question.id;
-//     row.innerHTML = `
-//             <td>${question.question}</td>
-//             <td>${question.answer}</td>
-//             <td>${question.time}</td>
-//             <td><button class="edit-question" data-id="${questionId}" data-question="${question.question}" data-answer="${question.answer}" data-time="${question.time}">Edit</button></td>
-//             <td><button class="delete-question" data-id="${questionId}">Delete</button></td>
-//         `;
-//     questionList.appendChild(row);
-//   });
-// }
 
 function clearQuestionForm() {
   document.getElementById("question").value = "";
@@ -101,40 +8,18 @@ function clearQuestionForm() {
   document.getElementById("time").value = "";
 }
 
-function saveNewQuestion() {
-  const question = document.getElementById("question").value;
-  const answer = document.getElementById("answer").value;
-  const time = document.getElementById("time").value;
-
-  if (!question || !answer || !time) {
-    alert("Please fill in all fields");
-    return;
+function getQuestionModal(mode, questionIndex = null) {
+    const questionModal = document.getElementById("questionModal");
+    if (mode === 'new') {
+      clearQuestionForm();
+    } else if (mode === 'edit') {
+      const questionData = inBrowserQuestions[questionIndex];
+      document.getElementById("question").value = questionData.question;
+      document.getElementById("answer").value = questionData.answer;
+      document.getElementById("time").value = questionData.time;
+    }
+    questionModal.showModal();
   }
-
-  const questionData = {
-    question: question,
-    answer: answer,
-    time: time,
-  };
-
-  inBrowserQuestions.push(questionData);
-  console.log("Question added locally:", questionData);
-
-  const tbody = document.querySelector("#questionTable tbody");
-  const row = document.createElement("tr");
-  const localIndex = inBrowserQuestions.length - 1;
-  row.innerHTML = `
-        <td>${question}</td>
-        <td>${answer}</td>
-        <td>${time}</td>
-        <td><button class="edit-question" data-index="${localIndex}" data-question="${question}" data-answer="${answer}" data-time="${time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
-        <td><button class="delete-question" data-index="${localIndex}">Delete</button></td>
-    `;
-  tbody.appendChild(row);
-
-  document.querySelector("dialog").close();
-  clearQuestionForm();
-}
 
 document.addEventListener("DOMContentLoaded", () => {
   const newQuizBtn = document.getElementById("newQuiz");
@@ -182,19 +67,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  function getQuestionModal(mode, questionIndex = null) {
-    const questionModal = document.getElementById("questionModal");
-    if (mode === 'new') {
-      clearQuestionForm();
-    } else if (mode === 'edit') {
-      const questionData = inBrowserQuestions[questionIndex];
-      document.getElementById("question").value = questionData.question;
-      document.getElementById("answer").value = questionData.answer;
-      document.getElementById("time").value = questionData.time;
-    }
-    questionModal.showModal();
-  }
-
   function eventListeners() {
     const newQuestionBtn = document.getElementById("newQuestion");
     const saveQuestionBtn = document.getElementById("saveNewQuestion");
@@ -210,16 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
-
-    // if (saveQuestionBtn) {
-    //   saveQuestionBtn.addEventListener("click", () => {
-    //     if (!questionModal) {
-    //       console.error("Question modal not found");
-    //       return;
-    //     }
-    //     saveNewQuestion();
-    //   });
-    // }
 
     if (questionTable) {
       questionTable.addEventListener("click", (event) => {

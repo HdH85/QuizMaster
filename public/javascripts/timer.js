@@ -6,7 +6,7 @@ function startTimer(timeInSeconds, onTimeUp, onTick) {
 
         const minutes = Math.floor(timeRemaining / 60);
         const seconds = timeRemaining % 60;
-        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}:${milliseconds}`;
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
         if (onTick) {
             onTick(formattedTime, timeRemaining);
@@ -15,7 +15,7 @@ function startTimer(timeInSeconds, onTimeUp, onTick) {
             clearInterval(timer);
             if (onTimeUp) onTimeUp();
         }
-    });
+    }, 1000);
     
     return timer;
 }

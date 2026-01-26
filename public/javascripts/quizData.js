@@ -1,8 +1,17 @@
 ﻿import { getApi } from './api.js';
 
+function addQuiz(quizData) {
+  return getApi("quiz", "POST", quizData).then((res) => {
+    if (res.success) {
+      return res.data.result;
+    } else {
+      throw new Error(res.data.message);
+    }
+  });
+}
 
-async function getQuizData(quizId) {
-    return getApi(`/quiz/${quizId}`, 'GET', null, true)
+async function getQuizData(Id) {
+    return getApi(`/quiz/${Id}`, 'GET', Id, true)
         .then(res => {
             if (res.success) {
                 return res.data.result;
@@ -12,19 +21,49 @@ async function getQuizData(quizId) {
         }) 
 }
 
-async function getQuestionData(questionId) {
-    return getApi(`/questions/${questionId}`, 'GET', null, true)
+function deleteQuiz(id) {
+  return getApi(`quiz/${id}`, "DELETE", null, true).then((res) => {
+    if (res.success) {
+      return res.data.result;
+    } else {
+      throw new Error(res.data.message);
+    }
+  });
+}
+
+async function getQuestion(Id) {
+    return getApi(`/questions/${Id}`, 'GET', Id, true)
         .then(res => {
             if (res.success) {
-                return res.data.result.questions;
+                return res.data.result;
             } else {
                 throw new Error(res.data.message);       
             }
         })  
 }
 
-async function getAnswerData(answerId) {
-    return getApi(`/answers/${answerId}`, 'GET', null, true)
+function updateQuestion(id) {
+  return getApi(`quiz/question/${id}`, "PUT", id).then((res) => {
+    if (res.success) {
+      return res.data.result;
+    } else {
+      throw new Error(res.data.message);
+    }
+  });
+}
+
+function deleteQuestion(id) {
+  return getApi(`quiz/question/${id}`, "DELETE", null, true).then((res) => {
+    if (res.success) {
+      return res.data.result;
+    } else {
+      throw new Error(res.data.message);
+    }
+  });
+}
+
+async function getAnswer(Id) {
+    return getApi(`/question/${Id}`, 'GET', Id, true)
         .then(res => {
             if (res.success) {
                 return res.data.result.answers;
@@ -45,4 +84,4 @@ async function quizAllQuestions(quizId) {
         }) 
 }
 
-export { getQuizData, getQuestionData, getAnswerData, quizAllQuestions };
+export { addQuiz,getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, quizAllQuestions };
