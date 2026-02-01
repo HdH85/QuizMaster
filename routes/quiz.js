@@ -4,13 +4,13 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var jwt = require('jsonwebtoken');
 var QuestionService = require('../services/QuestionService');
-var UserService = require('../services/UserService');
-var userService = new UserService();
 var questionService = new QuestionService();
-const { isAuth, isAdmin } = require('../middleware/authMiddleware')
-const cookieParser = require('cookie-parser');
+// var UserService = require('../services/UserService');
+// var userService = new UserService();
+// const { isAuth, isAdmin } = require('../middleware/authMiddleware')
 const QuizService = require("../services/QuizService");
 const quizService = new QuizService();
+const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
 router.get('/', async (req, res, next) => {
@@ -23,7 +23,8 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const quiz = await quizService.getQuizById(req.params.id);
+        const quizId = req.params.id;
+        const quiz = await quizService.getQuizById(quizId);
         res.render('quiz', {title: 'Quizmaker', quiz: quiz});
     } catch (error) {
         console.log(error);

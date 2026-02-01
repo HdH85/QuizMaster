@@ -3,18 +3,17 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 var jwt = require('jsonwebtoken');
-var QuestionService = require('../services/QuestionService');
-var UserService = require('../services/UserService');
-var userService = new UserService();
-var questionService = new QuestionService();
-const { isAuth, isAdmin } = require('../middleware/authMiddleware')
+var QuizService = require('../services/QuizService');
+var quizService = new QuizService();
+// var UserService = require('../services/UserService');
+// var userService = new UserService();
+// const { isAuth, isAdmin } = require('../middleware/authMiddleware')
 const cookieParser = require('cookie-parser');
-const { route } = require('./myQuizzes');
 router.use(cookieParser());
 
 router.get('/', async (req, res, next) => {
     try {
-        res.render('quiz', {title: 'Quizmaker', quiz: null });
+        res.render('playQuiz', {title: 'Play Quiz', quiz: null });
     } catch (error) {
         console.log(error);
     }
@@ -22,8 +21,13 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     try {
-        const quiz = await quizService.getQuizById(req.params.id);
-        res.render('quiz', {title: 'Quizmaker', quiz: quiz});
+        const quizId = req.params.id;
+        const quiz = await quizService.getQuizById(quizId);
+
+        if (!quiz) {
+            return res.status(404).send('Quiz not found');
+        }
+        res.render('playQuiz', {title: 'Play Quiz', quiz: quiz});
     } catch (error) {
         console.log(error);
     }
