@@ -8,19 +8,6 @@ function clearQuestionForm() {
   document.getElementById("time").value = "";
 }
 
-function getQuestionModal(mode, questionIndex = null) {
-    const questionModal = document.getElementById("questionModal");
-    if (mode === 'new') {
-      clearQuestionForm();
-    } else if (mode === 'edit') {
-      const questionData = inBrowserQuestions[questionIndex];
-      document.getElementById("question").value = questionData.question;
-      document.getElementById("answer").value = questionData.answer;
-      document.getElementById("time").value = questionData.time;
-    }
-    questionModal.showModal();
-  }
-
 document.addEventListener("DOMContentLoaded", () => {
   const newQuizBtn = document.getElementById("newQuiz");
   const questionContainer = document.getElementById("questionContainer");
@@ -72,75 +59,106 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveQuestionBtn = document.getElementById("saveNewQuestion");
     const saveQuizBtn = document.getElementById("saveQuiz");
     const questionTable = document.getElementById("questionTable");
+    const deleteQuestionBtn = document.getElementById("delete-question");
+    const editQuestionBtn = document.getElementById("edit-question");
+    const questionModal = document.getElementById("add-question");
+    const playBtn = document.getElementById("playQuiz");
 
     if (newQuestionBtn) {
-      newQuestionBtn.addEventListener("click", () => {
+      newQuestionBtn.addEventListener("click", (e) => {
         if (questionModal) {
-          getQuestionModal('new');
+           e.preventDefault();
+          questionModal.showModal();
         } else {
           console.error("Question modal not found");
         }
       });
     }
 
+    if (saveQuestionBtn) {
+        saveQuestionBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+
+          const question = document.getElementById("question").value;
+          const answer = document.getElementById("answer").value;
+          const time = document.getElementById("time").value;
+
+          if (!question || !answer || !time) {
+            alert("Please fill in all fields");
+            return;
+          }
+
+          const questionData = {
+            question: question,
+            answer: answer,
+            time: time,
+          };
+          
+          inBrowserQuestions.push(questionData);
+          console.log("Question added/edited locally:", inBrowserQuestions);
+
+          const tbody = document.querySelector("#questionTable tbody");
+          const row = document.createElement("tr");
+          const localIndex = inBrowserQuestions.length - 1;
+          row.innerHTML = `
+                <td>${question}</td>
+                <td>${answer}</td>
+                <td>${time}</td>
+                <td><button class="edit-question" data-index="${localIndex}" data-question="${question}" data-answer="${answer}" data-time="${time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
+                <td><button class="delete-question" data-index="${localIndex}">Delete</button></td>
+            `;
+          tbody.appendChild(row);
+          questionModal.close();
+          clearQuestionForm();
+        });
+    }
+
+    if (deleteQuestionBtn) {
+      deleteQuestionBtn.addEventListener("click", (e) => {
+        const index = parseInt(e.target.getAttribute("data-index"));
+        inBrowserQuestions.splice(index, 1);
+        console.log("Question deleted locally at index:", index);
+        e.target.closest("tr").remove();
+        const rows = questionTable.querySelectorAll("tbody tr");
+        rows.forEach((row, i) => {
+          const editBtn = row.querySelector(".edit-question");
+          const deleteBtn = row.querySelector(".delete-question");
+          if (editBtn) {
+            editBtn.setAttribute("data-index", i);
+          }
+          if (deleteBtn) {
+            deleteBtn.setAttribute("data-index", i);
+          }
+        });
+      });
+    }
+
+    if (editQuestionBtn) {
+      editQuestionBtn.addEventListener("click", (e) => {
+        const questionIndex = parseInt(e.target.getAttribute("data-index"));
+        getQuestionModal('edit', questionIndex);
+      });
+    }
+
     if (questionTable) {
-      questionTable.addEventListener("click", (event) => {
-        if (event.target.classList.contains("edit-question")) {
-          const question = event.target.getAttribute("data-question");
-          const answer = event.target.getAttribute("data-answer");
-          const time = event.target.getAttribute("data-time");
-
-          document.getElementById("question").value = question;
-          document.getElementById("answer").value = answer;
-          document.getElementById("time").value = time;
-          getQuestionModal('edit', parseInt(event.target.getAttribute("data-index")));
-          if (saveQuestionBtn) {
-            saveQuestionBtn.onclick = () => {
-              const updatedQuestion = document.getElementById("question").value;
-              const updatedAnswer = document.getElementById("answer").value;
-              const updatedTime = document.getElementById("time").value;
-              const index = parseInt(event.target.getAttribute("data-index"));
-
-              if (!updatedQuestion || !updatedAnswer || !updatedTime) {
-                alert("Please fill in all fields");
-                return;
-              }
-              inBrowserQuestions[index] = {
-                question: updatedQuestion,
-                answer: updatedAnswer,
-                time: updatedTime,
-              };
-              console.log("Question updated locally at index:", index);
-              const row = event.target.closest("tr");
-              row.innerHTML = `
-                    <td>${updatedQuestion}</td>
-                    <td>${updatedAnswer}</td>
-                    <td>${updatedTime}</td>
-                    <td><button class="edit-question" data-index="${index}" data-question="${updatedQuestion}" data-answer="${updatedAnswer}" data-time="${updatedTime}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
-                    <td><button class="delete-question" data-index="${index}">Delete</button></td>
-                `;
-              document.querySelector("dialog").close();
-              clearQuestionForm();
+      questionTable.addEventListener("click", (e) => {
+        if (e.target.classList.contains("delete-question")) {
+          const index = parseInt(e.target.getAttribute("data-index"));
+          inBrowserQuestions.splice(index, 1);
+          console.log("Question deleted locally at index:", index);
+          e.target.closest("tr").remove();
+          const rows = questionTable.querySelectorAll("tbody tr");
+          rows.forEach((row, i) => {
+            const editBtn = row.querySelector(".edit-question");
+            const deleteBtn = row.querySelector(".delete-question");
+            if (editBtn) {
+              editBtn.setAttribute("data-index", i);
             }
-          }
-        } else if (event.target.classList.contains("delete-question")) {
-            const index = parseInt(event.target.getAttribute("data-index"));
-            inBrowserQuestions.splice(index, 1);
-            console.log("Question deleted locally at index:", index);
-            event.target.closest("tr").remove();
-
-            const rows = questionTable.querySelectorAll("tbody tr");
-            rows.forEach((row, i) => {
-              const editBtn = row.querySelector(".edit-question");
-              const deleteBtn = row.querySelector(".delete-question");
-              if (editBtn) {
-                editBtn.setAttribute("data-index", i);
-              }
-              if (deleteBtn) {
-                deleteBtn.setAttribute("data-index", i);
-              }
-            });
-          }
+            if (deleteBtn) {
+              deleteBtn.setAttribute("data-index", i);
+            }
+          });
+        }
       });
     }
 
@@ -175,6 +193,13 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error saving quiz", err.message || err);
             alert("Error saving quiz: " + (err.message || err));
           });
+      });
+    }
+
+    if (playBtn) {
+      playBtn.addEventListener("click", () => {
+        const quizId = playBtn.getAttribute("data-quiz-id");
+        window.location.href = `/playQuiz/${quizId}`;
       });
     }
   }
