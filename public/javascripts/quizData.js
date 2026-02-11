@@ -73,8 +73,8 @@ function getAnswer(id) {
         }) 
 }
 
-function quizAllQuestions(id) {
-    return getApi(`/quiz/${id}/questions`, 'GET', null, true)
+function quizAllQuestions(quizId) {
+    return getApi(`/quiz/${quizId}/questions`, 'GET', null, true)
         .then(res => {
             if (res.success) {
                 return res.data.result.questions;
@@ -84,4 +84,4 @@ function quizAllQuestions(id) {
         }) 
 }
 
-export { addQuiz,getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, quizAllQuestions };
+export { addQuiz, getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, getAllQuestions };
