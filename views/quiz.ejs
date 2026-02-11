@@ -14,15 +14,16 @@
     <p></p>
     <div id="quizNameContainer">
         <% if (typeof quiz !== 'undefined' && quiz) {%>
-            <h3><%= quiz.name %></h3>
+            <h3 id="theQuizName"><%= quiz.name %></h3>
             <% if (quiz.questions && quiz.questions.length > 0) { %>
                 <div id="questionContainer">
-                    <table>
+                    <table id="questionTable">
                         <thead>
                             <tr>
                                 <th>Question</th>
                                 <th>Answer</th>
                                 <th>Time (minutes)</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,18 +33,20 @@
                                     <td><%= question.answer %></td>
                                     <td><%= question.time %></td>
                                     <td>
-                                        <button class="editQuestionBtn" data-index="<%= index %>">Edit</button>
-                                        <button class="deleteQuestionBtn" data-index="<%= index %>">Delete</button>
+                                        <button class="editQuestionBtn" data-index="<%= index %>" data-question="<%= question.question %>" data-answer="<%= question.answer %>" data-time="<%= question.time %>">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="deleteQuestionBtn" data-index="<%= index %>" data-question="<%= question.question %>" data-answer="<%= question.answer %>" data-time="<%= question.time %>">Delete</button>
                                     </td>
                                 </tr>
                             <% }); %>
                         </tbody>
                     </table>
                     <p>
-                        <a href="/quiz"><button>Create New Quiz</button></a>
+                        <button id="addQuestion">Add Question</button>
                     </p>
                     <p>
-                        <a href="/playQuiz/<%= quiz.id %>"><button id="playQuiz">Play</button></a>
+                        <a href="/quiz"><button>Create New Quiz</button></a>
                     </p>
                 </div>
                 <% } else { %>

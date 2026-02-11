@@ -3,6 +3,20 @@ import { addQuiz } from "./quizData.js";
 document.addEventListener("DOMContentLoaded", () => {
 
   let inBrowserQuestions = [];
+  let editIndex = null;
+
+  function addRowToTable(questionData, index) {
+    const tbody = document.querySelector("#questionTable tbody");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+          <td>${questionData.question}</td>
+          <td>${questionData.answer}</td>
+          <td>${questionData.time}</td>
+          <td><button class="edit-question" data-index="${index}" data-question="${questionData.question}" data-answer="${questionData.answer}" data-time="${questionData.time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
+          <td><button class="delete-question" data-index="${index}">Delete</button></td>
+      `;
+    tbody.appendChild(row);
+  }
 
   function clearQuestionForm() {
     document.getElementById("question").value = "";
@@ -50,45 +64,12 @@ document.addEventListener("DOMContentLoaded", () => {
     if (restore) {
       document.getElementById("theQuizName").value = savedQuiz.name;
       inBrowserQuestions = savedQuiz.questions;
-      quizNameContainer.innerHTML = `<h3 id="theQuizName">${savedQuiz.name}</h3>`;
-      questionContainer.innerHTML = `
-                            <p>
-                                <button id="newQuestion" data-bs-toggle="modal" data-bs-target="#questionModal">Add question</button>
-                            </p>
-                            <p>
-                            <div id="tableContainer">
-                                <table id="questionTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Time</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            </p>
-                            <p></p>
-                            <a>
-                                <button id="saveQuiz">Save quiz</button>
-                            </a>
-                        `;
-      quizNameContainer.appendChild(questionContainer);
-
+      questionContainer.style.display = "block";
       const tbody = document.querySelector("#questionTable tbody");
+      tbody.innerHTML = "";
+
       savedQuiz.questions.forEach((q, index) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-                <td>${q.question}</td>
-                <td>${q.answer}</td>
-                <td>${q.time}</td>
-                <td><button class="edit-question" data-index="${index}" data-question="${q.question}" data-answer="${q.answer}" data-time="${q.time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
-                <td><button class="delete-question" data-index="${index}">Delete</button></td>
-            `;
-        tbody.appendChild(row);
+        addRowToTable(q, index);
       });
 
       eventListeners();
@@ -105,34 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       } else {
         inBrowserQuestions = [];
-        quizNameContainer.innerHTML = `<h3 id="theQuizName">${quizName}</h3>`;
-        questionContainer.innerHTML = `
-                            <p>
-                                <button id="newQuestion" data-bs-toggle="modal" data-bs-target="#questionModal">Add question</button>
-                            </p>
-                            <p>
-                            <div id="tableContainer">
-                                <table id="questionTable">
-                                    <thead>
-                                    <tr>
-                                        <th>Question</th>
-                                        <th>Answer</th>
-                                        <th>Time</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                            </p>
-                            <p></p>
-                            <a>
-                                <button id="saveQuiz">Save quiz</button>
-                            </a>
-                        `;
-        quizNameContainer.appendChild(questionContainer);
-
+        document.getElementById("theQuizName").value = quizName;
         eventListeners();
       }
     });
@@ -177,81 +131,62 @@ document.addEventListener("DOMContentLoaded", () => {
             answer: answer,
             time: time,
           };
-          
-          inBrowserQuestions.push(questionData);
-          saveState();
-          console.log("Question added/edited locally:", inBrowserQuestions);
 
-          const tbody = document.querySelector("#questionTable tbody");
-          const row = document.createElement("tr");
-          const localIndex = inBrowserQuestions.length - 1;
-          row.innerHTML = `
-                <td>${question}</td>
-                <td>${answer}</td>
-                <td>${time}</td>
-                <td><button class="edit-question" data-index="${localIndex}" data-question="${question}" data-answer="${answer}" data-time="${time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
-                <td><button class="delete-question" data-index="${localIndex}">Delete</button></td>
-            `;
-          tbody.appendChild(row);
+          if (editIndex !== null) {
+            inBrowserQuestions[editIndex] = questionData;
+            const tbody = document.querySelector("#questionTable tbody");
+            tbody.innerHTML = "";
+            inBrowserQuestions.forEach((q, index) => {
+              addRowToTable(q, index);
+            });
+            editIndex = null;
+          } else {
+            inBrowserQuestions.push(questionData);
+            addRowToTable(questionData, inBrowserQuestions.length - 1);
+          }
+
+          saveState();
           questionModal.close();
           clearQuestionForm();
         });
     }
 
-    if (deleteQuestionBtn) {
-      deleteQuestionBtn.addEventListener("click", (e) => {
-        const index = parseInt(e.target.getAttribute("data-index"));
-        inBrowserQuestions.splice(index, 1);
-        console.log("Question deleted locally at index:", index);
-        e.target.closest("tr").remove();
-        saveState();
-        const rows = questionTable.querySelectorAll("tbody tr");
-        rows.forEach((row, i) => {
-          const editBtn = row.querySelector(".edit-question");
-          const deleteBtn = row.querySelector(".delete-question");
-          if (editBtn) {
-            editBtn.setAttribute("data-index", i);
+    if (questionTable) {
+        questionTable.addEventListener("click", (e) => {
+          if (e.target.classList.contains("delete-question")) {
+            const index = parseInt(e.target.getAttribute("data-index"));
+            inBrowserQuestions.splice(index, 1);
+            console.log("Question deleted locally at index:", index);
+            saveState();
+            const tbody = document.querySelector("#questionTable tbody");
+            e.target.closest("tr").remove();
+            const rows = questionTable.querySelectorAll("tbody tr");
+            rows.forEach((row, i) => {
+              const editBtn = row.querySelector(".edit-question");
+              const deleteBtn = row.querySelector(".delete-question");
+              if (editBtn) {
+                editBtn.setAttribute("data-index", i);
+              }
+              if (deleteBtn) {
+                deleteBtn.setAttribute("data-index", i);
+              }
+            });
           }
-          if (deleteBtn) {
-            deleteBtn.setAttribute("data-index", i);
+
+          if(e.target.classList.contains("edit-question")) {
+            const questionIndex = parseInt(e.target.getAttribute("data-index"));
+            const q = inBrowserQuestions[questionIndex];
+            document.getElementById("question").value = q.question;
+            document.getElementById("answer").value = q.answer;
+            document.getElementById("time").value = q.time;
+            questionModal.showModal();
           }
         });
-      });
-    }
-
-    if (editQuestionBtn) {
-      editQuestionBtn.addEventListener("click", (e) => {
-        const questionIndex = parseInt(e.target.getAttribute("data-index"));
-        getQuestionModal('edit', questionIndex);
-      });
-    }
-
-    if (questionTable) {
-      questionTable.addEventListener("click", (e) => {
-        if (e.target.classList.contains("delete-question")) {
-          const index = parseInt(e.target.getAttribute("data-index"));
-          inBrowserQuestions.splice(index, 1);
-          console.log("Question deleted locally at index:", index);
-          saveState();
-          e.target.closest("tr").remove();
-          const rows = questionTable.querySelectorAll("tbody tr");
-          rows.forEach((row, i) => {
-            const editBtn = row.querySelector(".edit-question");
-            const deleteBtn = row.querySelector(".delete-question");
-            if (editBtn) {
-              editBtn.setAttribute("data-index", i);
-            }
-            if (deleteBtn) {
-              deleteBtn.setAttribute("data-index", i);
-            }
-          });
-        }
-      });
-    }
+      }
 
     if (saveQuizBtn) {
       saveQuizBtn.addEventListener("click", () => {
-        const quizName = document.getElementById("theQuizName").innerText;
+        const quizName = document.getElementById("theQuizName").value;
         if (!quizName) {
           alert("Please enter a quiz name");
           return;
@@ -284,11 +219,12 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    if (playBtn) {
-      playBtn.addEventListener("click", () => {
-        const quizId = playBtn.getAttribute("data-quiz-id");
-        window.location.href = `/playQuiz/${quizId}`;
-      });
-    }
+  //   if (playBtn) {
+  //     playBtn.addEventListener("click", () => {
+  //       const quizId = playBtn.getAttribute("data-quiz-id");
+  //       window.location.href = `/playQuiz/${quizId}`;
+  //     });
+  //   }
+  
   }
 });

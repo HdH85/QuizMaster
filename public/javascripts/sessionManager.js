@@ -1,4 +1,5 @@
 import { quizAllQuestions } from './quizData.js';
+
 class Quiz {
     constructor(quizId) {
         this.quizId = quizId;
@@ -33,4 +34,4 @@ class Quiz {
     }
 }
 
-module.exports = Quiz;
+export { Quiz };

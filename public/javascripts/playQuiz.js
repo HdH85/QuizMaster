@@ -4,8 +4,6 @@ import { startTimer, stopTimer } from './timer.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
     const startQuizButton = document.getElementById("startQuiz");
-    const textContainer = document.getElementById("text-container");
-    const timerDisplay = document.getElementById("timer-display");
 
     startQuizButton.addEventListener("click", async () => {
         await quiz.startQuiz();
