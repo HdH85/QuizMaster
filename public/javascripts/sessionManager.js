@@ -1,4 +1,4 @@
-import { getQuizData, getQuestionData, getAnswerData, quizAllQuestions } from './quizData.js';
+import { quizAllQuestions } from './quizData.js';
 class Quiz {
     constructor(quizId) {
         this.quizId = quizId;
