@@ -2,10 +2,8 @@ import { quizAllQuestions } from './quizData.js';
 class Quiz {
     constructor(quizId) {
         this.quizId = quizId;
-        this.questions = [];
         this.currentQuestion = 0;
-        this.timer = null;
-        this.phase = 'loading';
+        this.phase = 'waiting';
     }
     
     async startQuiz() {
@@ -23,6 +21,10 @@ class Quiz {
             return true;
         }
         return false;
+    }
+
+    async hasNextQuestion() {
+        return this.currentQuestion + 1 < this.questions.length;
     }
     
     async answers() {

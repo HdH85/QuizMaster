@@ -1,16 +1,101 @@
 import { addQuiz } from "./quizData.js";
 
-let inBrowserQuestions = [];
-
-function clearQuestionForm() {
-  document.getElementById("question").value = "";
-  document.getElementById("answer").value = "";
-  document.getElementById("time").value = "";
-}
-
 document.addEventListener("DOMContentLoaded", () => {
+
+  let inBrowserQuestions = [];
+
+  function clearQuestionForm() {
+    document.getElementById("question").value = "";
+    document.getElementById("answer").value = "";
+    document.getElementById("time").value = "";
+  }
+
+  function saveState() {
+    const quizName = document.getElementById('theQuizName').value;
+    const quizData = {
+      name: quizName,
+      questions: inBrowserQuestions,
+      timeStamp: Date.now()
+    };
+
+    sessionStorage.setItem('unsavedQuiz', JSON.stringify(quizData));
+    console.log('Quiz state saved to sessionStorage:', quizData);
+  }
+
+  function getSavedState() {
+    const savedQuiz = sessionStorage.getItem('unsavedQuiz');
+    const parsedQuiz = JSON.parse(savedQuiz);
+    if (!parsedQuiz) {
+      return null;
+    } else if (Date.now() - parsedQuiz.timeStamp > 24 * 60 * 60 * 1000) {
+      sessionStorage.removeItem('unsavedQuiz');
+      return null;
+    } else {
+      return parsedQuiz;
+    }
+  }
+
+  function clearState() {
+    sessionStorage.removeItem('unsavedQuiz');
+    console.log('Quiz state cleared from sessionStorage');
+  }
+
   const newQuizBtn = document.getElementById("newQuiz");
+  const savedQuiz = getSavedState();
+  const quizNameContainer = document.getElementById("quizNameContainer");
   const questionContainer = document.getElementById("questionContainer");
+
+  if (savedQuiz && savedQuiz.questions && savedQuiz.questions.length > 0) {
+    const restore = confirm("You have an unsaved quiz. Would you like to restore it?");
+    if (restore) {
+      document.getElementById("theQuizName").value = savedQuiz.name;
+      inBrowserQuestions = savedQuiz.questions;
+      quizNameContainer.innerHTML = `<h3 id="theQuizName">${savedQuiz.name}</h3>`;
+      questionContainer.innerHTML = `
+                            <p>
+                                <button id="newQuestion" data-bs-toggle="modal" data-bs-target="#questionModal">Add question</button>
+                            </p>
+                            <p>
+                            <div id="tableContainer">
+                                <table id="questionTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>Answer</th>
+                                        <th>Time</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            </p>
+                            <p></p>
+                            <a>
+                                <button id="saveQuiz">Save quiz</button>
+                            </a>
+                        `;
+      quizNameContainer.appendChild(questionContainer);
+
+      const tbody = document.querySelector("#questionTable tbody");
+      savedQuiz.questions.forEach((q, index) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                <td>${q.question}</td>
+                <td>${q.answer}</td>
+                <td>${q.time}</td>
+                <td><button class="edit-question" data-index="${index}" data-question="${q.question}" data-answer="${q.answer}" data-time="${q.time}" data-bs-toggle="modal" data-bs-target="#questionModal">Edit</button></td>
+                <td><button class="delete-question" data-index="${index}">Delete</button></td>
+            `;
+        tbody.appendChild(row);
+      });
+
+      eventListeners();
+    } else {
+      clearState();
+    }
+  }
 
   if (newQuizBtn) {
     newQuizBtn.addEventListener("click", () => {
@@ -20,7 +105,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       } else {
         inBrowserQuestions = [];
-        const quizNameContainer = document.getElementById("quizNameContainer");
         quizNameContainer.innerHTML = `<h3 id="theQuizName">${quizName}</h3>`;
         questionContainer.innerHTML = `
                             <p>
@@ -95,6 +179,7 @@ document.addEventListener("DOMContentLoaded", () => {
           };
           
           inBrowserQuestions.push(questionData);
+          saveState();
           console.log("Question added/edited locally:", inBrowserQuestions);
 
           const tbody = document.querySelector("#questionTable tbody");
@@ -119,6 +204,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inBrowserQuestions.splice(index, 1);
         console.log("Question deleted locally at index:", index);
         e.target.closest("tr").remove();
+        saveState();
         const rows = questionTable.querySelectorAll("tbody tr");
         rows.forEach((row, i) => {
           const editBtn = row.querySelector(".edit-question");
@@ -146,6 +232,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const index = parseInt(e.target.getAttribute("data-index"));
           inBrowserQuestions.splice(index, 1);
           console.log("Question deleted locally at index:", index);
+          saveState();
           e.target.closest("tr").remove();
           const rows = questionTable.querySelectorAll("tbody tr");
           rows.forEach((row, i) => {
@@ -183,6 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
         addQuiz(quizData)
           .then((res) => {
             console.log("Quiz saved:", res);
+            clearState();
             alert("Quiz saved successfully!");
 
             const quizId = res.id;
