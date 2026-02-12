@@ -73,7 +73,7 @@ function getAnswer(id) {
         }) 
 }
 
-function quizAllQuestions(quizId) {
+function getAllQuestions(quizId) {
     return getApi(`/quiz/${quizId}/questions`, 'GET', null, true)
         .then(res => {
             if (res.success) {

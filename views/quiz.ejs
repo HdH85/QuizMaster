@@ -60,7 +60,21 @@
             <p>
                 <button id="newQuiz">Make Quiz</button>
             </p>
-            <div id="questionContainer">
+            <h3 id="theQuizName" style="display:none;"></h3>
+            <div id="questionContainer" style="display:none;">
+                <table id="questionTable">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Answer</th>
+                            <th>Time (minutes)</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p><button id="newQuestion">Add Question</button></p>
+                <p><button id="saveQuiz">Save Quiz</button></p>
             </div>
         <%}%>
     </div>

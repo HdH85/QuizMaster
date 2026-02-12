@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveState() {
-    const quizName = document.getElementById('theQuizName').value;
+    const quizName = document.getElementById('theQuizName').textContent;
     const quizData = {
       name: quizName,
       questions: inBrowserQuestions,
@@ -84,11 +84,18 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!quizName) {
         alert("Please enter a quiz name");
         return;
-      } else {
-        inBrowserQuestions = [];
-        document.getElementById("theQuizName").value = quizName;
-        eventListeners();
       }
+
+      document.getElementById("name").style.display = "none";
+      newQuizBtn.parentElement.style.display = "none";
+
+      const title = document.getElementById("theQuizName");
+      title.textContent = quizName;
+      title.style.display = "block";
+
+      questionContainer.style.display = "block";
+      inBrowserQuestions = [];
+      eventListeners();
     });
   }
 
@@ -173,7 +180,7 @@ document.addEventListener("DOMContentLoaded", () => {
             });
           }
 
-          if(e.target.classList.contains("edit-question")) {
+          if (e.target.classList.contains("edit-question")) {
             const questionIndex = parseInt(e.target.getAttribute("data-index"));
             const q = inBrowserQuestions[questionIndex];
             document.getElementById("question").value = q.question;
