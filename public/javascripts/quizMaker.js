@@ -62,7 +62,13 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedQuiz && savedQuiz.questions && savedQuiz.questions.length > 0) {
     const restore = confirm("You have an unsaved quiz. Would you like to restore it?");
     if (restore) {
-      document.getElementById("theQuizName").value = savedQuiz.name;
+      document.getElementById("name").style.display = "none";
+      if (newQuizBtn) {
+        newQuizBtn.parentElement.style.display = "none";
+      }
+      const title = document.getElementById("theQuizName");
+      title.textContent = savedQuiz.name;
+      title.style.display = "block";
       inBrowserQuestions = savedQuiz.questions;
       questionContainer.style.display = "block";
       const tbody = document.querySelector("#questionTable tbody");
@@ -225,13 +231,5 @@ document.addEventListener("DOMContentLoaded", () => {
           });
       });
     }
-
-  //   if (playBtn) {
-  //     playBtn.addEventListener("click", () => {
-  //       const quizId = playBtn.getAttribute("data-quiz-id");
-  //       window.location.href = `/playQuiz/${quizId}`;
-  //     });
-  //   }
-  
   }
 });

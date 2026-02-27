@@ -84,4 +84,16 @@ function getAllQuestions(quizId) {
         }) 
 }
 
+function getAllAnswers(quizId) {
+    return getApi(`/quiz/${quizId}/answers`, 'GET', null, true)
+        .then(res => {
+            if (res.success) {
+                return res.data.result.answers;
+            }
+              else {
+                throw new Error(res.data.message);       
+            }
+        }) 
+}
+
 export { addQuiz, getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, getAllQuestions };

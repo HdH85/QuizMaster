@@ -6,7 +6,7 @@ router.use(cookieParser());
 
 /* GET home page. */
 router.get('/', async(req, res, next) => {
-    res.render('myquizzes', {title: 'myQuizzes'});
+    res.render('myQuizzes', {title: 'myQuizzes'});
 });
 
 module.exports = router;

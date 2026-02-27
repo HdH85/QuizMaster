@@ -1,7 +1,7 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: #000000;
+  background-color: #111111;
   color: #FFFFFF;
   text-align: center;
 }
@@ -23,9 +23,9 @@ a {
   color: #00B7FF;
 }
 
-#start {
-  background-color: #FFFFFF;
-  color: #000000;
+#start, #playQuiz {
+  background-color: green;
+  color: #FFFFFF;
   border: none;
   padding: 15px 32px;
   text-align: center;
@@ -37,9 +37,9 @@ a {
   transition: 0.3s;
 }
 
-#start:hover {
-  background-color: green;
-  color: #FFFFFF;
+#start:hover, #playQuiz:hover {
+  background-color: rgb(233, 236, 13);
+  color: #000000;
 }
 
 .centerBox {
@@ -68,8 +68,6 @@ footer {
   bottom: 0;
   width: 100%;
   padding: 15px;
-  background-color: #000000;
-  color: #FFFFFF;
   text-align: left;
 }
 

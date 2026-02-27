@@ -11,17 +11,17 @@ var quizService = new QuizService();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-router.get('/', async (req, res, next) => {
-    try {
-        res.render('playQuiz', {title: 'Play Quiz', quiz: null });
-    } catch (error) {
-        console.log(error);
-    }
-});
+// router.get('/', async (req, res, next) => {
+//     try {
+//         res.render('playQuiz', {title: 'Play Quiz', quiz: null });
+//     } catch (error) {
+//         console.log(error);
+//     }
+// });
 
-router.get('/:id', async (req, res, next) => {
+router.get('/:quizId', async (req, res, next) => {
     try {
-        const quizId = req.params.id;
+        const quizId = req.params.quizId;
         const quiz = await quizService.getQuizById(quizId);
 
         if (!quiz) {

@@ -1,4 +1,4 @@
-function startTimer(timeInSeconds, onTimeUp, onTick) {
+function startTimer(timeInSeconds, onTick) {
     let timeRemaining = timeInSeconds;
     
     const timer = setInterval(() => {
@@ -8,12 +8,9 @@ function startTimer(timeInSeconds, onTimeUp, onTick) {
         const seconds = timeRemaining % 60;
         const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-        if (onTick) {
-            onTick(formattedTime, timeRemaining);
-        }
+        onTick(formattedTime, timeRemaining);
         if (timeRemaining <= 0) {
             clearInterval(timer);
-            if (onTimeUp) onTimeUp();
         }
     }, 1000);
     
