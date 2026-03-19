@@ -86,3 +86,9 @@ footer {
 #regLink:hover {
   color: green;
 }
+
+dialog {
+  background-color: #111111;
+  color: #FFFFFF;
+  text-align: center;
+}

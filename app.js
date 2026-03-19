@@ -15,7 +15,9 @@ var myQuizzesRouter = require('./routes/myQuizzes');
 var playQuizRouter = require('./routes/playQuiz');
 
 var db = require('./models');
-db.sequelize.sync({ force: false }).then(async () => {
+db.ready.then(() => {
+  return db.sequelize.sync({ force: false })
+}).then(() => {
   console.log('Database & tables all good!');
 }).catch(err => {
   console.log('Unable to synchronize the database:', err);
