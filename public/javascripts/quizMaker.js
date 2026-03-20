@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function saveState() {
-    const quizName = document.getElementById('theQuizName').textContent;
+    const quizName = document.getElementById('theQuizName').innerText;
     const quizData = {
       name: quizName,
       questions: inBrowserQuestions,
@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (saveQuizBtn) {
       saveQuizBtn.addEventListener("click", () => {
-        const quizName = document.getElementById("theQuizName").value;
+        const quizName = document.getElementById("theQuizName").textContent;
         if (!quizName) {
           alert("Please enter a quiz name");
           return;
