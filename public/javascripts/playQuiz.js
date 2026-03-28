@@ -11,19 +11,21 @@ document.addEventListener("DOMContentLoaded", async () => {
                 quizContainer.innerHTML = `
                     <p>${quiz.getCurrentQuestion().question}</p>
                     <p id="timer"></p>
+                    <p><a href="/quiz/${quizId}"><button>Quit</button></a></p>
                     `;
                 break;
             case 'answers':
                 quizContainer.innerHTML = `
                     <p>${quiz.getCurrentQuestion().answer}</p>
+                    <p><button href="/quiz/${quizId}">Quit</button></p>
                     `;
                 break;
             case 'finished':
                 quizContainer.innerHTML = `
-                            <h3>Congratulations! Quiz done!</h3>
-                            <p></p>
-                            <p><button href="/quiz/${quizId}">Exit</button></p>
-                            `;
+                    <h3>Congratulations! Quiz done!</h3>
+                    <p></p>
+                    <p><button href="/quiz/${quizId}">Quit</button></p>
+                    `;
                 break;
             default:
                 quizContainer.innerHTML = `<button id="playQuiz">Play</button>`;
