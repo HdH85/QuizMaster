@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const db = require('../models');
 
 class QuestionService {
@@ -29,12 +30,21 @@ class QuestionService {
             throw new Error('Error updating question: ' + error.message);       
         }
     }
-    async getAllQuestions() {
+    async getAllQuestions(id) {
         try {
-            const questions = await this.question.findAll();
+            const questions = await this.question.findAll({ where: { quizId: id } });
             return questions;
         } catch (error) {
             throw new Error('Error fetching questions: ' + error.message);
+        }
+    }
+
+    async getAllAnswers(id) {
+        try {
+            const questions = await this.question.findAll({ where: { quizId: id } });
+            return questions.map(q => q.answer);
+        } catch (error) {
+            throw new Error('Error fetching answers: ' + error.message)
         }
     }
 
@@ -47,6 +57,18 @@ class QuestionService {
             return question;
         } catch (error) {
             throw new Error('Error fetching question: ' + error.message);
+        }
+    }
+
+    async getAnswerById(id) {
+        try {
+            const question = await this.question.findByPk(id);
+            if (!question) {
+                return new Error('Answer not found');
+            }
+            return question.answer;
+        } catch (error) {
+            throw new Error('Error fetching answer: ' + error.message);
         }
     }
 

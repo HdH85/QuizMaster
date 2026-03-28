@@ -31,6 +31,40 @@ router.get('/:id', async (req, res, next) => {
     }
 });
 
+router.get('/:id/questions', jsonParser, async (req, res, next) => {
+    try {
+        const quizId = req.params.id;
+        const quiz = await questionService.getAllQuestions(quizId);
+        res.status(200).json({
+            success: true,
+            statuscode: 200,
+            data: {
+                message: 'Questions retrieved.',
+                result: { questions: quiz }
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.get('/:id/answers', jsonParser, async (req, res, next) => {
+    try {
+        const quizId = req.params.id;
+        const quiz = await questionService.getAllAnswers(quizId);
+        res.status(200).json({
+            success: true,
+            statuscode: 200,
+            data: {
+                message: 'Answers retrieved.',
+                result: { answers: quiz }
+            }
+        })
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 router.post('/', jsonParser, async (req, res, next) => {
     try {
         const { name, questions } = req.body;

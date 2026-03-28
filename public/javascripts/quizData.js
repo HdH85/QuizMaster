@@ -11,7 +11,7 @@ function addQuiz(quizData) {
 }
 
 function getQuizData(id) {
-    return getApi(`/quiz/${id}`, 'GET', id, true)
+    return getApi(`/quiz/${id}`, 'GET', null)
         .then(res => {
             if (res.success) {
                 return res.data.result;
@@ -22,7 +22,7 @@ function getQuizData(id) {
 }
 
 function deleteQuiz(id) {
-  return getApi(`quiz/${id}`, "DELETE", null, true).then((res) => {
+  return getApi(`/quiz/${id}`, "DELETE", null, true).then((res) => {
     if (res.success) {
       return res.data.result;
     } else {
@@ -43,7 +43,7 @@ function getQuestion(id) {
 }
 
 function updateQuestion(id) {
-  return getApi(`quiz/question/${id}`, "PUT", id).then((res) => {
+  return getApi(`/quiz/question/${id}`, "PUT", id).then((res) => {
     if (res.success) {
       return res.data.result;
     } else {
@@ -96,4 +96,4 @@ function getAllAnswers(quizId) {
         }) 
 }
 
-export { addQuiz, getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, getAllQuestions };
+export { addQuiz, getQuizData, deleteQuiz, getQuestion, updateQuestion, deleteQuestion, getAnswer, getAllQuestions, getAllAnswers };

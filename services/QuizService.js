@@ -23,10 +23,7 @@ class QuizService {
                     model: this.question, 
                     as: 'questions' 
                 }]
-            });
-            if (!quiz) {
-                return new Error('Quiz not found');
-            }
+            })
             return quiz;
         } catch (error) {
             throw new Error('Error fetching quiz: ' + error.message);

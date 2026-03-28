@@ -16,10 +16,10 @@ class Quiz {
         return this.getCurrentQuestion();
     }
 
-    async getQuizName() {
-        const quizName = await getQuizData(this.quizId);
-        return quizName.name;
-    }
+    // async getQuizName() {
+    //     const quizName = await getQuizData(this.quizId);
+    //     return quizName.name;
+    // }
 
     getCurrentQuestion() {
         const question = this.questions[this.currentQuestion];
@@ -39,6 +39,11 @@ class Quiz {
             this.currentQuestion = 0;
             return null;
         }
+    }
+
+    getAllAnswers() {
+        const answers = this.answers;
+        return answers;
     }
 
     getCurrentAnswer() {

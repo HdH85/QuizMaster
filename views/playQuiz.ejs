@@ -9,13 +9,13 @@
 <body>
     <%- include('partials/navbar') %>
     <p></p>
-    <h2>Quiz</h2>
+    <h2><%= quiz.name %></h2>
     <div id="quizContainer">
         <!-- Play session code renders here -->
     </div>
     <p></p>
     <script>
-        const quizId = <%= quiz.id %>; 
+        const quizId = <%= quiz.id %>;
     </script>
     <script type="module" src="/javascripts/playQuiz.js"></script>
     <%- include('partials/footer.ejs') %>

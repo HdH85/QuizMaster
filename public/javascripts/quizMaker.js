@@ -110,10 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveQuestionBtn = document.getElementById("saveNewQuestion");
     const saveQuizBtn = document.getElementById("saveQuiz");
     const questionTable = document.getElementById("questionTable");
-    const deleteQuestionBtn = document.getElementById("delete-question");
-    const editQuestionBtn = document.getElementById("edit-question");
     const questionModal = document.getElementById("add-question");
-    const playBtn = document.getElementById("playQuiz");
 
     if (newQuestionBtn) {
       newQuestionBtn.addEventListener("click", (e) => {

@@ -1,5 +1,5 @@
 import { Quiz } from './sessionManager.js';
-import { startTimer, stopTimer } from './timer.js';
+import { startTimer } from './timer.js';
 
 document.addEventListener("DOMContentLoaded", async () => {
     const quiz = new Quiz(quizId);
@@ -9,18 +9,21 @@ document.addEventListener("DOMContentLoaded", async () => {
         switch (quiz.phase) {
             case 'quizzing':
                 quizContainer.innerHTML = `
-                    <h3>${quiz.name}</h3>
-                    <p>${quiz.currentQuestion}</p>
+                    <p>${quiz.getCurrentQuestion().question}</p>
+                    <p id="timer"></p>
                     `;
                 break;
             case 'answers':
                 quizContainer.innerHTML = `
-                    <h3>${quiz.name}</h3>
-                    <p>${quiz.currentQuestion}</p>
+                    <p>${quiz.getCurrentQuestion().answer}</p>
                     `;
                 break;
             case 'finished':
-                quizContainer.innerHTML = `<h3>Congratulations! Quiz done!</h3>`;
+                quizContainer.innerHTML = `
+                            <h3>Congratulations! Quiz done!</h3>
+                            <p></p>
+                            <p><button href="/quiz/${quizId}">Exit</button></p>
+                            `;
                 break;
             default:
                 quizContainer.innerHTML = `<button id="playQuiz">Play</button>`;
@@ -33,29 +36,42 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if(startQuizButton) {
         startQuizButton.addEventListener('click', async () => {
-            let currentTimer;
             await quiz.startQuiz();
             renderQuiz(quiz);
-            currentTimer = startTimer(quiz.getCurrentQuestion().time, (formattedTime, timeRemaining) => {
+            
+            function tick(formattedTime, timeRemaining) {
+                const countdown = document.getElementById("timer");
+                if (countdown) countdown.textContent = formattedTime;
                 if (timeRemaining <= 0 && quiz.hasNextQuestion()) {
                     quiz.nextQuestion();
                     renderQuiz(quiz);
-                    startTimer(quiz.getCurrentQuestion().time);
-                } else {
-                    stopTimer();
+                    startTimer(quiz.getCurrentQuestion().time * 60, tick);
+                } else if (timeRemaining <= 0) {
+                    quiz.phase = 'answers';
+                    quiz.currentQuestion = 0;
                     renderQuiz(quiz);
-                    startTimer(5000, () => {
-                        if (quiz.hasNextAnswer()) {
-                            quiz.nextAnswer();
-                            renderQuiz(quiz);
-                            startTimer(5000);
-                        } else {
-                            stopTimer();
-                            renderQuiz(quiz);
+
+                    function answerTick(formattedTime, timeRemaining) {
+                        const countdown = document.getElementById("timer");
+                        if (countdown) countdown.textContent = formattedTime;
+                        if (timeRemaining <= 0) {
+                            if (quiz.hasNextAnswer()) {
+                                quiz.nextAnswer();
+                                renderQuiz(quiz);
+                                startTimer(20, answerTick);
+                                } else {
+                                    quiz.phase = 'finished';
+                                    renderQuiz(quiz);
+                                }
+                            }
                         }
-                    });
+                    
+                    startTimer(20, answerTick);
+                        
+                    }
                 }
-            });
+
+            startTimer(quiz.getCurrentQuestion().time * 60, tick);
         });
     }
 });

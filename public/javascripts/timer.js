@@ -17,10 +17,4 @@ function startTimer(timeInSeconds, onTick) {
     return timer;
 }
 
-function stopTimer(timer) {
-    if (timer) {
-        clearInterval(timer);   
-    }
-}
-
-export { startTimer, stopTimer };
+export { startTimer };

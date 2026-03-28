@@ -11,18 +11,11 @@ var quizService = new QuizService();
 const cookieParser = require('cookie-parser');
 router.use(cookieParser());
 
-// router.get('/', async (req, res, next) => {
-//     try {
-//         res.render('playQuiz', {title: 'Play Quiz', quiz: null });
-//     } catch (error) {
-//         console.log(error);
-//     }
-// });
-
 router.get('/:quizId', async (req, res, next) => {
     try {
         const quizId = req.params.quizId;
         const quiz = await quizService.getQuizById(quizId);
+        console.log(quizId);
 
         if (!quiz) {
             return res.status(404).send('Quiz not found');
