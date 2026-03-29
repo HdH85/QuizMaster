@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
     <title>QuizMaker</title>
 </head>
 <body>
     <%- include('partials/navbar') %>
     <%- include('partials/modal') %>
-    <p></p>
+    <p id="spacing"></p>
     <h2>QuizMaker</h2>
     <p></p>
-    <div id="quizNameContainer">
+    <div id="quizNameContainer" class="centerBox">
         <% if (typeof quiz !== 'undefined' && quiz) {%>
             <h3 id="theQuizName"><%= quiz.name %></h3>
             <% if (quiz.questions && quiz.questions.length > 0) { %>
@@ -43,13 +44,14 @@
                         </tbody>
                     </table>
                     <p>
-                        <button id="addQuestion">Add Question</button>
+                        <a href="/playQuiz/<%= quiz.id %>">
+                            <button class="gameButton" >Play quiz</button>
+                        </a>
                     </p>
                     <p>
-                        <a id="playQuiz" href="/playQuiz/<%= quiz.id %>"><button>Play quiz</button></a>
-                    </p>
-                    <p>
-                        <a href="/quiz"><button>Create New Quiz</button></a>
+                        <a href="/quiz">
+                            <button class="gameButton">Create New Quiz</button>
+                        </a>
                     </p>
                 </div>
                 <% } else { %>
@@ -61,7 +63,7 @@
                 <input type="text" name="quizName" id="quizName" placeholder="Name your quiz">
             </div>
             <p>
-                <button id="newQuiz">Make Quiz</button>
+                <button class="gameButton" id="newQuiz">Make Quiz</button>
             </p>
             <h3 id="theQuizName" style="display:none;"></h3>
             <div id="questionContainer" style="display:none;">
@@ -76,8 +78,8 @@
                     </thead>
                     <tbody></tbody>
                 </table>
-                <p><button id="newQuestion">Add Question</button></p>
-                <p><button id="saveQuiz">Save Quiz</button></p>
+                <p><button class="gameButton" id="newQuestion">Add Question</button></p>
+                <p><button class="gameButton" id="saveQuiz">Save Quiz</button></p>
             </div>
         <%}%>
     </div>

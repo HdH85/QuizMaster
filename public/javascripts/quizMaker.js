@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function eventListeners() {
     const newQuestionBtn = document.getElementById("newQuestion");
     const saveQuestionBtn = document.getElementById("saveNewQuestion");
+    const closeModalBtn = document.getElementById('close');
     const saveQuizBtn = document.getElementById("saveQuiz");
     const questionTable = document.getElementById("questionTable");
     const questionModal = document.getElementById("add-question");
@@ -159,6 +160,15 @@ document.addEventListener("DOMContentLoaded", () => {
           questionModal.close();
           clearQuestionForm();
         });
+    }
+
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        questionModal.close();
+        clearQuestionForm();
+      })
     }
 
     if (questionTable) {

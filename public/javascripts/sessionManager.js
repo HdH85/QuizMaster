@@ -16,11 +16,6 @@ class Quiz {
         return this.getCurrentQuestion();
     }
 
-    // async getQuizName() {
-    //     const quizName = await getQuizData(this.quizId);
-    //     return quizName.name;
-    // }
-
     getCurrentQuestion() {
         const question = this.questions[this.currentQuestion];
         return question;

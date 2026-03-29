@@ -9,26 +9,38 @@ document.addEventListener("DOMContentLoaded", async () => {
         switch (quiz.phase) {
             case 'quizzing':
                 quizContainer.innerHTML = `
-                    <p>${quiz.getCurrentQuestion().question}</p>
+                    <p class="quizText">${quiz.getCurrentQuestion().question}</p>
                     <p id="timer"></p>
-                    <p><a href="/quiz/${quizId}"><button>Quit</button></a></p>
+                    <p>
+                        <a href="/quiz/${quizId}">
+                            <button class="gameButton">Quit</button>
+                        </a>
+                    </p>
                     `;
                 break;
             case 'answers':
                 quizContainer.innerHTML = `
-                    <p>${quiz.getCurrentQuestion().answer}</p>
-                    <p><button href="/quiz/${quizId}">Quit</button></p>
+                    <p class="quizText">${quiz.getCurrentQuestion().answer}</p>
+                    <p>
+                        <a href="/quiz/${quizId}">
+                            <button class="gameButton">Quit</button>
+                        </a>
+                    </p>
                     `;
                 break;
             case 'finished':
                 quizContainer.innerHTML = `
                     <h3>Congratulations! Quiz done!</h3>
                     <p></p>
-                    <p><button href="/quiz/${quizId}">Quit</button></p>
+                    <p>
+                        <a href="/quiz/${quizId}">
+                            <button class="gameButton">Quit</button>
+                        </a>
+                    </p>
                     `;
                 break;
             default:
-                quizContainer.innerHTML = `<button id="playQuiz">Play</button>`;
+                quizContainer.innerHTML = `<button id="playQuiz" class="gameButton">Play</button>`;
             }
     }
 
@@ -43,7 +55,15 @@ document.addEventListener("DOMContentLoaded", async () => {
             
             function tick(formattedTime, timeRemaining) {
                 const countdown = document.getElementById("timer");
-                if (countdown) countdown.textContent = formattedTime;
+                if (countdown) {
+                    countdown.textContent = formattedTime;
+                    countdown.className='';
+                    if (timeRemaining <= 30 && timeRemaining > 10) {
+                        countdown.classList.add('yellow');
+                    } else if (timeRemaining <= 10) {
+                        countdown.classList.add('red');
+                    }
+                }
                 if (timeRemaining <= 0 && quiz.hasNextQuestion()) {
                     quiz.nextQuestion();
                     renderQuiz(quiz);
