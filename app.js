@@ -15,9 +15,8 @@ var myQuizzesRouter = require('./routes/myQuizzes');
 var playQuizRouter = require('./routes/playQuiz');
 
 var db = require('./models');
-db.ready.then(() => {
-  return db.sequelize.sync({ force: false })
-}).then(() => {
+db.sequelize.sync({ force: false })
+.then(() => {
   console.log('Schema & tables all good!');
 }).catch(err => {
   console.log('Unable to synchronize the database:', err);
@@ -47,7 +46,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to true if using HTTPS
+  cookie: { secure: false }
 }));
 
 app.use('/', indexRouter);

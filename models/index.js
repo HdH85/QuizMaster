@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize');
-const mySql = require('mysql2/promise');
+// const mySql = require('mysql2/promise');
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(__filename);
@@ -13,37 +13,43 @@ const connection = {
     password: process.env.ADMIN_PASSWORD,
     database: process.env.DB_NAME,
     dialectmodel: process.env.DIALECTMODEL,
+    dialectOption: {
+        ssl: {
+            require: true,
+            rejectUnauthorized: false
+        }
+    }
 };
 
-async function createDbIfNotThere() {
-    const {host, port, username, password, database} = connection;
+// async function createDbIfNotThere() {
+//     const {host, port, username, password, database} = connection;
 
-    try {
-        const conn = await mySql.createConnection({
-            host,
-            port,
-            user: username,
-            password
-        });
+//     try {
+//         const conn = await mySql.createConnection({
+//             host,
+//             port,
+//             user: username,
+//             password
+//         });
 
-        await conn.query(
-            `CREATE DATABASE IF NOT EXISTS \`${database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
-        );
+//         await conn.query(
+//             `CREATE DATABASE IF NOT EXISTS \`${database}\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;`
+//         );
 
-        console.log(`Database '${database}' is ready.`)
-        await conn.end();
-    } catch (error) {
-        console.error('Error generating database:', error);
-        throw error;
-    }
-}
+//         console.log(`Database '${database}' is ready.`)
+//         await conn.end();
+//     } catch (error) {
+//         console.error('Error generating database:', error);
+//         throw error;
+//     }
+// }
 
-const dbReady = createDbIfNotThere();
+// const dbReady = createDbIfNotThere();
 
 const sequelize = new Sequelize(connection);
 const db = {};
 db.sequelize = sequelize;
-db.ready = dbReady;
+// db.ready = dbReady;
 
 fs.readdirSync(__dirname)
     .filter((file) => {
