@@ -5,7 +5,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-const { createProxyMiddleware } = require('http-proxy-middleware');
+// const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
@@ -29,13 +29,13 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-app.use('/api', createProxyMiddleware({
-    target: 'http://localhost:3000',
-    changeOrigin: true,
-    pathRewrite: {
-        '^/api': ''
-    }
-}));
+// app.use('/api', createProxyMiddleware({
+//     target: 'http://localhost:3000',
+//     changeOrigin: true,
+//     pathRewrite: {
+//         '^/api': ''
+//     }
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -54,6 +54,12 @@ app.use('/auth', authRouter);
 app.use('/quiz', quizRouter);
 app.use('/myquizzes', myQuizzesRouter);
 app.use('/playQuiz', playQuizRouter);
+
+app.use('api/', indexRouter);
+app.use('api/auth', authRouter);
+app.use('api/quiz', quizRouter);
+app.use('api/myquizzes', myQuizzesRouter);
+app.use('api/playQuiz', playQuizRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
