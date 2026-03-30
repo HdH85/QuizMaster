@@ -59,9 +59,9 @@ document.addEventListener("DOMContentLoaded", async () => {
                     countdown.textContent = formattedTime;
                     countdown.className='';
                     if (timeRemaining <= 30 && timeRemaining > 10) {
-                        countdown.classList.add('yellow');
+                        countdown.classList.add('yellowTimer');
                     } else if (timeRemaining <= 10) {
-                        countdown.classList.add('red');
+                        countdown.classList.add('redTimer');
                     }
                 }
                 if (timeRemaining <= 0 && quiz.hasNextQuestion()) {

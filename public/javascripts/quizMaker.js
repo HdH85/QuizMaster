@@ -56,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const newQuizBtn = document.getElementById("newQuiz");
   const savedQuiz = getSavedState();
-  const quizNameContainer = document.getElementById("quizNameContainer");
   const questionContainer = document.getElementById("questionContainer");
 
   if (savedQuiz && savedQuiz.questions && savedQuiz.questions.length > 0) {
@@ -165,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if (closeModalBtn) {
       closeModalBtn.addEventListener('click', (e) => {
         e.preventDefault();
-
         questionModal.close();
         clearQuestionForm();
       })

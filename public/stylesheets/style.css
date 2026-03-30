@@ -27,11 +27,11 @@ input[type="text"], #time {
   font-size: 28px;
 }
 
-.yellow {
+.yellowTimer {
   color: yellow;
 }
 
-.red {
+.redTimer {
   color: red;
 }
 
@@ -40,8 +40,20 @@ h2 {
   font-size: 50px;
 }
 
+:modal {
+  margin: auto;
+}
+
+#modalHeader {
+  color: green;
+  font-size: 24px;
+}
+
 #modalText {
-  font-size: 20px;
+  width: 300px;
+  margin: auto;
+  text-align: start;
+  margin-bottom: 35px;
 }
 
 .quizText {
