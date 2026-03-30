@@ -13,7 +13,7 @@ const connection = {
     password: process.env.ADMIN_PASSWORD,
     database: process.env.DB_NAME,
     dialectmodel: process.env.DIALECTMODEL,
-    dialectOption: {
+    dialectOptions: {
         ssl: {
             require: true,
             rejectUnauthorized: false
