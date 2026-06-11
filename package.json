@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node app"
   },
   "dependencies": {
     "apicache": "^1.6.3",
@@ -19,14 +19,11 @@
     "jade": "^0.29.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.1",
-    "mysql2": "^3.20.0",
-    "pg": "^8.20.0",
+    "pg": "^8.21.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.37.8"
   },
   "devDependencies": {
-    "dotenv": "^17.2.1",
-    "eslint": "^9.39.2",
-    "http-proxy-middleware": "^3.0.5"
+    "eslint": "^9.39.2"
   }
 }

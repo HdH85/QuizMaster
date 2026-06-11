@@ -3,16 +3,14 @@ const Sequelize = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const basename = path.basename(__filename);
-require('dotenv').config();
 
 const connection = {
     host: process.env.HOST,
     dialect: process.env.DIALECT,
-    port: process.env.PORT,
+    port: process.env.DB_PORT,
     username: process.env.ADMIN_USERNAME,
     password: process.env.ADMIN_PASSWORD,
     database: process.env.DB_NAME,
-    dialectmodel: process.env.DIALECTMODEL,
     dialectOptions: {
         ssl: {
             require: true,

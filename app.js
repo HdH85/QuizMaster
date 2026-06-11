@@ -1,11 +1,9 @@
-require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
-// const { createProxyMiddleware } = require('http-proxy-middleware');
 const bodyParser = require('body-parser');
 
 var indexRouter = require('./routes/index');
@@ -15,12 +13,6 @@ var myQuizzesRouter = require('./routes/myQuizzes');
 var playQuizRouter = require('./routes/playQuiz');
 
 var db = require('./models');
-db.sequelize.sync({ force: false })
-.then(() => {
-  console.log('Schema & tables all good!');
-}).catch(err => {
-  console.log('Unable to synchronize the database:', err);
-});
 
 var app = express();
 
@@ -29,13 +21,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
-// app.use('/api', createProxyMiddleware({
-//     target: 'http://localhost:3000',
-//     changeOrigin: true,
-//     pathRewrite: {
-//         '^/api': ''
-//     }
-// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -46,7 +31,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'keyboard cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }));
 
 app.use('/', indexRouter);
@@ -55,11 +40,11 @@ app.use('/quiz', quizRouter);
 app.use('/myquizzes', myQuizzesRouter);
 app.use('/playQuiz', playQuizRouter);
 
-app.use('api/', indexRouter);
-app.use('api/auth', authRouter);
-app.use('api/quiz', quizRouter);
-app.use('api/myquizzes', myQuizzesRouter);
-app.use('api/playQuiz', playQuizRouter);
+app.use('/api/', indexRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/quiz', quizRouter);
+app.use('/api/myquizzes', myQuizzesRouter);
+app.use('/api/playQuiz', playQuizRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
