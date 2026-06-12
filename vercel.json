@@ -1,7 +1,7 @@
 {
   "functions": { "app.js": { "maxDuration": 10 } },
   "routes": [
-    { "handle": "filesystem" },
+    { "src": "^/(javascripts|stylesheets|images)/(.*)$", "dest": "/$1/$2" },
     { "src": "/(.*)", "dest": "app.js" }
   ]
 }
