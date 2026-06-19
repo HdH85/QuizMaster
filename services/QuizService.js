@@ -4,7 +4,8 @@ class QuizService {
     constructor() {
         this.client = db.sequelize;
         this.quiz = db.quiz;
-        this.question = db.question;
+        this.question = db.que
+     
     }
     
     async getAllQuizzes() {

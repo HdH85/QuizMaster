@@ -1,31 +1,31 @@
 {
-  "name": "quizmaster",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
-  "dependencies": {
-    "@supabase/ssr": "^0.12.0",
-    "@supabase/supabase-js": "^2.108.1",
-    "apicache": "^1.6.3",
-    "bcrypt": "^6.0.0",
-    "body-parser": "^2.2.1",
-    "cookie-parser": "~1.4.4",
-    "cookieparser": "^0.1.0",
-    "debug": "~2.6.9",
-    "ejs": "^3.1.10",
-    "express": "^4.21.2",
-    "express-session": "^1.18.2",
-    "http-errors": "~1.6.3",
-    "jade": "^0.29.0",
-    "jsonwebtoken": "^9.0.2",
-    "morgan": "^1.10.1",
-    "pg": "^8.21.0",
-    "pg-hstore": "^2.3.4",
-    "sequelize": "^6.37.8"
-  },
-  "devDependencies": {
-    "eslint": "^9.39.2"
-  }
+    "name":  "quizmaster",
+    "version":  "0.0.0",
+    "private":  true,
+    "scripts":  {
+                    "start":  "node ./bin/www"
+                },
+    "dependencies":  {
+                         "@supabase/ssr":  "^0.12.0",
+                         "@supabase/supabase-js":  "^2.108.1",
+                         "apicache":  "^1.6.3",
+                         "bcrypt":  "^6.0.0",
+                         "body-parser":  "^2.2.1",
+                         "cookie-parser":  "~1.4.4",
+                         "cookieparser":  "^0.1.0",
+                         "debug":  "~2.6.9",
+                         "ejs":  "^3.1.10",
+                         "express":  "^4.21.2",
+                         "express-session":  "^1.18.2",
+                         "http-errors":  "~1.6.3",
+                         "jade":  "^0.29.0",
+                         "jsonwebtoken":  "^9.0.2",
+                         "morgan":  "^1.10.1",
+                         "pg":  "^8.21.0",
+                         "pg-hstore":  "^2.3.4",
+                         "sequelize":  "^6.37.8"
+                     },
+    "devDependencies":  {
+                            "eslint":  "^9.39.2"
+                        }
 }

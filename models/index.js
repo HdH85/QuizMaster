@@ -1,7 +1,48 @@
+const fs = require('fs');
+const path = require('path');
 const Sequelize = require('sequelize');
 const pg = require('pg');
 
-const sequelize = new Sequelize(process.env.DATABASE_URL, {
+function loadDotEnvFile() {
+    const envPath = path.resolve(__dirname, '..', '.env');
+    if (!fs.existsSync(envPath)) {
+        return;
+    }
+
+    const lines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+    lines.forEach((line) => {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) {
+            return;
+        }
+
+        const separatorIndex = trimmed.indexOf('=');
+        if (separatorIndex === -1) {
+            return;
+        }
+
+        const key = trimmed.slice(0, separatorIndex).trim();
+        if (!key || process.env[key] !== undefined) {
+            return;
+        }
+
+        let value = trimmed.slice(separatorIndex + 1).trim();
+        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+            value = value.slice(1, -1);
+        }
+
+        process.env[key] = value;
+    });
+}
+
+loadDotEnvFile();
+
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+    throw new Error('Missing DATABASE_URL. Add DATABASE_URL to your environment or .env file.');
+}
+
+const sequelize = new Sequelize(databaseUrl, {
     dialect: 'postgres',
     dialectModule: pg,
     dialectOptions: {

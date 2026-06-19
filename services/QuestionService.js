@@ -1,21 +1,42 @@
-const { where } = require('sequelize');
 const db = require('../models');
 
 class QuestionService {
     constructor() {
         this.client = db.sequelize;
         this.question = db.question;
+        this._questionHasQuizId = null;
+    }
+
+    async _hasQuizId() {
+        if (this._questionHasQuizId !== null) {
+            return this._questionHasQuizId;
+        }
+
+        const questionSchema = await this.client.getQueryInterface().describeTable('questions');
+        this._questionHasQuizId = Boolean(questionSchema.quizId);
+        return this._questionHasQuizId;
     }
 
     async createQuestion(data) {
         try {
-            const question = await this.question.create(data)
+            const hasQuizId = await this._hasQuizId();
+            const payload = {
+                question: data.question,
+                answer: data.answer,
+                time: data.time
+            };
+
+            if (hasQuizId && data.quizId !== undefined) {
+                payload.quizId = data.quizId;
+            }
+
+            const question = await this.question.create(payload);
             return question;
         } catch (error) {
             throw new Error('Error creating question: ' + error.message);
         }
     }
-    
+
     async EditQuestion(id, data) {
         try {
             const question = await this.question.findByPk(id);
@@ -26,13 +47,18 @@ class QuestionService {
                 question: data.question,
                 time: data.time
             });
+            return updatedQuestion;
         } catch (error) {
-            throw new Error('Error updating question: ' + error.message);       
+            throw new Error('Error updating question: ' + error.message);
         }
     }
+
     async getAllQuestions(id) {
         try {
-            const questions = await this.question.findAll({ where: { quizId: id } });
+            const hasQuizId = await this._hasQuizId();
+            const questions = hasQuizId
+                ? await this.question.findAll({ where: { quizId: id } })
+                : await this.question.findAll();
             return questions;
         } catch (error) {
             throw new Error('Error fetching questions: ' + error.message);
@@ -41,10 +67,13 @@ class QuestionService {
 
     async getAllAnswers(id) {
         try {
-            const questions = await this.question.findAll({ where: { quizId: id } });
-            return questions.map(q => q.answer);
+            const hasQuizId = await this._hasQuizId();
+            const questions = hasQuizId
+                ? await this.question.findAll({ where: { quizId: id } })
+                : await this.question.findAll();
+            return questions.map((q) => q.answer);
         } catch (error) {
-            throw new Error('Error fetching answers: ' + error.message)
+            throw new Error('Error fetching answers: ' + error.message);
         }
     }
 
